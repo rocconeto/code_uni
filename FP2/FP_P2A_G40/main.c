@@ -13,7 +13,7 @@ int main()
     printf("\n\t\t PETICIÓN DE DATOS ");
     printf("\n\t\t ================== \n\n");
     printf("\n\t\t Introduzca dos números enteros: ");
-    scanf("%d %d", &x &y);
+    scanf("%d %d", &x, &y);
 
     //Realizamos cálculos
     suma = x + y;
@@ -22,17 +22,18 @@ int main()
 
     //Suma los primeros x números enteros
     sumaTotal = 0;
-    for (i = 1; i<= x; i++);
+    for (i = 1; i<= x; i++)
+        sumaTotal = sumaTotal + 1;
 
     //Mostramos resultados en pantalla
     printf("\n\t\t RESULTADOS ");
     printf("\n\t\t =========== ");
-    
+
     printf("\n\t\t La suma es %d", suma);
     printf("\n\t\t La resta es %d", resta);
     printf("\n\t\t El producto es %d", producto);
     printf("\n\t\t La suma de los %d primeros números naturales es: %d", x, sumaTotal);
 
-    printf("\n\n\t\t Pulse <Intro> para finalizar... \n\n")
+    printf("\n\n\t\t Pulse <Intro> para finalizar... \n\n");
     getchar();
 }
