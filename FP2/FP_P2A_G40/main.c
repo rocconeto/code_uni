@@ -17,13 +17,13 @@ int main()
 
     //Realizamos cálculos
     suma = x + y;
-    resta = x / y;
+    resta = x - y;
     producto = x * y;
 
     //Suma los primeros x números enteros
     sumaTotal = 0;
     for (i = 1; i<= x; i++)
-        sumaTotal = sumaTotal + 1;
+        sumaTotal = sumaTotal + i;
 
     //Mostramos resultados en pantalla
     printf("\n\t\t RESULTADOS ");
