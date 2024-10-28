@@ -1,3 +1,6 @@
 .dist
 .vscode
 *.layout
+*.depend
+/bin
+/obj
