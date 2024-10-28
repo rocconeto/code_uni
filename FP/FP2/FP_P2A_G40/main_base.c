@@ -1,8 +1,7 @@
 #include <stdio.h>
 #include <locale.h>
 
-int main()
-{
+int main(){
     int x, y;
     int suma, resta, producto; //almacenan los resultados de los cálculos
     int i, sumaTotal;
