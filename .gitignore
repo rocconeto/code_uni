@@ -2,5 +2,5 @@
 .vscode
 *.layout
 *.depend
-/bin
-/obj
+bin/
+obj/
