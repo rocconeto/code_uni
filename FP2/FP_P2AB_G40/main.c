@@ -4,23 +4,23 @@
 int main()
 {
     int x, y;
-    int suma, resta, producto; //almacenan los resultados de los cÃ¡lculos
+    int suma, resta, producto; //almacenan los resultados de los cálculos
     int i, sumaTotal;
 
     setlocale(LC_ALL, "spanish");
 
-    //Pedimos los nÃºmeros al usuario
-    printf("\n\t\t PETICIÃ“N DE DATOS ");
+    //Pedimos los números al usuario
+    printf("\n\t\t PETICIÓN DE DATOS ");
     printf("\n\t\t ================== \n\n");
-    printf("\n\t\t Introduzca dos nÃºmeros enteros: ");
+    printf("\n\t\t Introduzca dos números enteros: ");
     scanf("%d %d", &x, &y);
 
-    //Realizamos cÃ¡lculos
+    //Realizamos cálculos
     suma = x + y;
     resta = x / y;
     producto = x * y;
 
-    //Suma los primeros x nÃºmeros enteros
+    //Suma los primeros x números enteros
     sumaTotal = 0;
     for (i = 1; i<= x; i++)
         sumaTotal = sumaTotal + 1;
@@ -32,7 +32,7 @@ int main()
     printf("\n\t\t La suma es %d", suma);
     printf("\n\t\t La resta es %d", resta);
     printf("\n\t\t El producto es %d", producto);
-    printf("\n\t\t La suma de los %d primeros nÃºmeros naturales es: %d", x, sumaTotal);
+    printf("\n\t\t La suma de los %d primeros números naturales es: %d", x, sumaTotal);
 
     printf("\n\n\t\t Pulse <Intro> para finalizar... \n\n");
     getchar();

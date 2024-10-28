@@ -1,3 +1,11 @@
+/********************************************************
+Programa:           peticion_datos.c
+Tarea que realiza:  Pide dos numeros y calcula varias relaciones entre ambos.
+
+Autores:            Daniel Atanasov y Raul Sanz
+Fecha:              23/10/2024
+********************************************************/
+
 #include <stdio.h>
 #include <locale.h>
 
