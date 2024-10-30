@@ -13,6 +13,11 @@ Fecha:              23/10/2024
 
 int main()
 {
-    printf("Hello world!\n");
+    //Definimos las variables
+    int rg1, rg2;
+
+    //Pide los valores del rango
+    printf("Introduce el número mínimo de rango: ")
+    //
     return 0;
 }
