@@ -58,7 +58,7 @@ int main()
                 int i, e;
                 char dbj[100] = "*";
                 for (e=0; e<lado; e++) {
-                    printf("\t\t\t");
+                    printf("\t\t");
                     for (i=0; i<lado; i++) {
                         printf("%s", dbj);
                     }
@@ -90,8 +90,12 @@ int main()
                 }while(alt<=1);
 
                 char dbj_tr[100] = "*";
-                char addchar[10] = "*";
+                char addchar[10] = "**";
                 for (i=0; i<alt; i++) {
+                    printf("\t\t");
+                    for (e=0; e<alt-i; e++) {
+                        printf(" ");
+                    };
                     printf("%s\n", dbj_tr);
                     strcat(dbj_tr, addchar);
                 }
