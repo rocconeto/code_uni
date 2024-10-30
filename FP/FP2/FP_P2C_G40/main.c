@@ -8,14 +8,12 @@ Fecha:              23/10/2024
 ********************************************************/
 #include <stdio.h>
 #include <stdlib.h>
-#include <locale.h>
 #include <string.h>
 
 int main()
 {
 
     int opt, lado, alt;
-    setlocale(LC_ALL, "spanish");
 
     printf("--------------------------------------------------------------------------\n");
     printf("\n\tBIENVENIDOS A NUESTRA APLICACION DE OPCIONES!\n");
@@ -57,18 +55,27 @@ int main()
                 }while(lado <0 || lado == 0);
 
                 //Realizamos el dibujo
-                int i;
-                char dbj[100] = " ";
-                char addchar[2];
-                addchar[0] = "#";
-                addchar[1] = 0;
-
-                for (i=0; i<lado; i++) {
-                    strcat (dbj, addchar);
-                };
-                for (i=0; i<lado; i++) {
-                    printf("%s\n", dbj);
+                int i, e;
+                char dbj[100] = "*";
+                for (e=0; e<lado; e++) {
+                    printf("\t\t\t");
+                    for (i=0; i<lado; i++) {
+                        printf("%s", dbj);
+                    }
+                    printf("\n");
                 }
+                //int i;
+                //char dbj[100] = " ";
+                //char addchar[2];
+                //addchar[0] = "*";
+                //addchar[1] = 0;
+
+                //for (i=0; i<lado; i++) {
+                //    strcat (dbj, addchar);
+                //};
+                //for (i=0; i<lado; i++) {
+                //    printf("%s\n", dbj);
+                //}
 
                 break;
             case 2:
