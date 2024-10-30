@@ -13,7 +13,7 @@ Fecha:              23/10/2024
 int main()
 {
 
-    int opt, lado, alt;
+    int opt, lado, alt, rombo;
 
     printf("--------------------------------------------------------------------------\n");
     printf("\n\tBIENVENIDOS A NUESTRA APLICACION DE OPCIONES!\n");
@@ -64,18 +64,6 @@ int main()
                     }
                     printf("\n");
                 }
-                //int i;
-                //char dbj[100] = " ";
-                //char addchar[2];
-                //addchar[0] = "*";
-                //addchar[1] = 0;
-
-                //for (i=0; i<lado; i++) {
-                //    strcat (dbj, addchar);
-                //};
-                //for (i=0; i<lado; i++) {
-                //    printf("%s\n", dbj);
-                //}
 
                 break;
             case 2:
@@ -100,6 +88,35 @@ int main()
                     strcat(dbj_tr, addchar);
                 }
 
+
+                break;
+
+            case 3:
+                printf("\n2. DIBUJAR UN ROMBO\n");
+                printf("\n************************************************************************\n");
+                do{
+                    printf("\n\tIntroduzca un número impar y positivo igual o mayor que 3: ");
+                    scanf("%d", &rombo);
+                    if (rombo<3){
+                        printf("\tEl número debe ser mayor o igual a 3.\n");
+                    } elif (rombo/2 == 0) {
+                        printf("\tEl número debe ser impar")
+                    }
+                }while(rombo<=3 || rombo/2 == 0);
+
+                float mitad = rombo/2 - 0.5;
+                char dbj_rb[100] = "*";
+                char addchar[10] = "**";
+                for (i=0; i<rombo; i++) {
+                    printf("\t\t");
+                    if (i<=mitad) {
+                            for (e=0; e<rombo-mitad; e++) {
+                            printf(" ");
+                        };
+                    };
+                    printf("%s\n", dbj_tr);
+                    strcat(dbj_tr, addchar);
+                }
 
                 break;
         };
