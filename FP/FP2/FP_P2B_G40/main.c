@@ -10,34 +10,41 @@ Fecha:              23/10/2024
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <locale.h>
 
 int main()
 {
     //Definimos las variables
-    int rg1, rg2;
+    int rg1, rg2, i;
+    setlocale(LC_ALL, "spanish");
 
     //Pide los valores del rango
+    printf("--------------------------------------------------------------------------\n");
+    printf("\n\tPETICIÓN MÍNIMO Y MÁXIMO DEL RANGO\n");
+    printf("\n--------------------------------------------------------------------------\n");
     do{
-        printf("Introduce el numero minimo del rango: ");
+        printf("\tIntroduce el numero minimo del rango: ");
         scanf("%d", &rg1);
         if (rg1<0) {
-            printf("El numero minimo del rango no puede ser menor que 0\n");
+            printf("\tEl numero minimo del rango no puede ser menor que 0\n");
         };
     } while (rg1<0);
     do{
-        printf("Introduce el numero maximo del rango: ");
+        printf("\tIntroduce el numero maximo del rango: ");
         scanf("%d", &rg2);
         if (rg2<=rg1) {
-            printf("El numero maximo del rango no puede ser menor/igual que el minimo");
-        };
+            printf("\tError: el numero minimo debe ser menor que el maximo\n\n");
+        }
     } while (rg2<=rg1);
 
-    //Test
-    printf("rg1 es %d\n", rg1);
-    printf("rg2 es %d", rg2);
+    system("pause");
+    system("cls");
 
-
-
-    //
+    //Validacion de numeros dentro del rango
+    printf("--------------------------------------------------------------------------\n");
+    printf("\n\tPETICIÓN: VALIDAR NÚMERO DENTRO DEL RANGO [%d-%d]\n", rg1, rg2);
+    printf("\n--------------------------------------------------------------------------\n");
+    printf("\n\tIntroduzca cuantos números quiere probar si están en el rango: ");
+    scanf("%d", &i);
     return 0;
 }
