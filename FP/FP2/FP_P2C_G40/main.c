@@ -88,7 +88,15 @@ int main()
                         printf("\tLa altura debe ser mayor o igual a 2.\n");
                     }
                 }while(alt<=1);
-                //Tienes que hacer los dibujos
+
+                char dbj_tr[100] = "*";
+                char addchar[10] = "*";
+                for (i=0; i<alt; i++) {
+                    printf("%s\n", dbj_tr);
+                    strcat(dbj_tr, addchar);
+                }
+
+
                 break;
         };
     } while (opt != 4);
