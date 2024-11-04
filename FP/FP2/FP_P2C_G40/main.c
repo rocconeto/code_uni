@@ -14,6 +14,7 @@ int main()
 {
 
     int opt, lado, alt, rombo;
+    int i, e;
 
     printf("--------------------------------------------------------------------------\n");
     printf("\n\tBIENVENIDOS A NUESTRA APLICACION DE OPCIONES!\n");
@@ -55,7 +56,6 @@ int main()
                 }while(lado <0 || lado == 0);
 
                 //Realizamos el dibujo
-                int i, e;
                 char dbj[100] = "*";
                 for (e=0; e<lado; e++) {
                     printf("\t\t");
@@ -105,17 +105,27 @@ int main()
                 }while(rombo<=3 || rombo/2 == 0);
 
                 float mitad = rombo/2 - 0.5;
-                char dbj_rb[100] = "*";
-                char addchar[10] = "**";
-                for (i=0; i<rombo; i++) {
-                    printf("\t\t");
-                    if (i<=mitad) {
-                            for (e=0; e<rombo-mitad; e++) {
-                            printf(" ");
-                        };
-                    };
-                    printf("%s\n", dbj_tr);
-                    strcat(dbj_tr, addchar);
+                // Parte superior del rombo
+                for (i = mitad - 1; i >= 0; i++) {
+                    for (e = 0; e < mitad - i; e++) {
+                        printf(" ");
+                    }
+                    for (e = 0; e < 2*i +1; e++) {
+                        printf("*");
+                    }
+                    printf("\n");
+                }
+                //Parte inferior del rombo
+                for (i = mitad - 1; i >= 0; i--) {
+                    // Espacios a la izquierda
+                    for (e = 0; e < mitad - i; e++) {
+                        printf(" ");
+                    }
+                    // Asteriscos
+                    for (e = 0; e < 2 * i + 1; e++) {
+                        printf("*");
+                    }
+                    printf("\n");
                 }
 
                 break;
