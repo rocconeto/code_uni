@@ -21,7 +21,7 @@ int main()
 
     //Pide los valores del rango
     printf("--------------------------------------------------------------------------\n");
-    printf("\n\tPETICIÓN MÍNIMO Y MÁXIMO DEL RANGO\n");
+    printf("\n\tPETICIï¿½N Mï¿½NIMO Y Mï¿½XIMO DEL RANGO\n");
     printf("\n--------------------------------------------------------------------------\n");
     do{
         printf("\n\tIntroduce el numero minimo del rango: ");
@@ -34,7 +34,7 @@ int main()
         printf("\n\tIntroduce el numero maximo del rango: ");
         scanf("%d", &rg2);
         if (rg2<=rg1) {
-            printf("\n\tError: el numero minimo debe ser menor que el maximo\n\n");
+            printf("\n\tError: el numero maximo debe ser mayor que el minimo\n\n");
         }
     } while (rg2<=rg1);
 
@@ -44,20 +44,20 @@ int main()
 
     //Validacion de numeros dentro del rango
     printf("--------------------------------------------------------------------------\n");
-    printf("\n\tPETICIÓN: VALIDAR NÚMERO DENTRO DEL RANGO [%d-%d]\n", rg1, rg2);
+    printf("\n\tPETICIï¿½N: VALIDAR Nï¿½MERO DENTRO DEL RANGO [%d-%d]\n", rg1, rg2);
     printf("\n--------------------------------------------------------------------------\n");
-    printf("\n\tIntroduzca cuantos números quiere probar si están en el rango: ");
+    printf("\n\tIntroduzca cuantos nï¿½meros quiere probar si estï¿½n en el rango: ");
     scanf("%d", &n);
 
-    //Ejecuta tantas veces como números se quieren comprobar
+    //Ejecuta tantas veces como nï¿½meros se quieren comprobar
     media = 0;
     summedia = 0;
     iteraciones = 0;
     for (i=0; i<n; i++){
-        printf("\n\n\tIntroduce el número a validar: ");
+        printf("\n\n\tIntroduce el nï¿½mero a validar: ");
         scanf("%d", &num);
         if (num>rg1 && num<rg2){
-            printf("\n\tEl número está dentro del rango\n");
+            printf("\n\tEl nï¿½mero estï¿½ dentro del rango\n");
             //Calcula los numeros pares menores que el numero dado que estan dentro de la lista
             p = rg1%2;
             if (p==0){ //Comprueba si el primer numero es par para empezar la lista
@@ -71,7 +71,7 @@ int main()
                     }
                 }
                 printf("]\n");
-                printf("\n\tEl número de pares en el rango inferiores a %d es: %d\n", num, cant);
+                printf("\n\tEl nï¿½mero de pares en el rango inferiores a %d es: %d\n", num, cant);
             } else {
                 np = rg1+1;
                 cant = 0;
@@ -83,15 +83,15 @@ int main()
                     }
                 }
                 printf("]\n");
-                printf("\n\tEl número de pares en el rango inferiores a %d es: %d\n", num, cant);
+                printf("\n\tEl nï¿½mero de pares en el rango inferiores a %d es: %d\n", num, cant);
             }
             summedia = summedia + num;
             iteraciones = iteraciones + 1;
         } else{
-            printf("\n\tEl número está fuera del rango\n");
+            printf("\n\tEl nï¿½mero estï¿½ fuera del rango\n");
         }
     }
     media = summedia/iteraciones;
-    printf("\n\n\tLa media de los números dentro del rango es: %.2f\n", media);
+    printf("\n\n\tLa media de los nï¿½meros dentro del rango es: %.2f\n", media);
     return 0;
 }
