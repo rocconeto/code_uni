@@ -99,10 +99,10 @@ int main()
                     scanf("%d", &rombo);
                     if (rombo<3){
                         printf("\tEl número debe ser mayor o igual a 3.\n");
-                    } else if (rombo % 2 == 0); {
+                    } else if (rombo % 2 == 0) {
                         printf("\tEl número debe ser impar");
                     }
-                }while(rombo<=3 || rombo/2 == 0);
+                }while(rombo<=3 || rombo % 2 == 0);
 
                  int mitad = rombo / 2;
 
