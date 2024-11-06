@@ -1,0 +1,85 @@
+Inicio
+    Definir rg1, rg2, i, n, num, p, np, cant, summedia, iteraciones como Entero
+    Definir media como Real
+
+    // Configurar idioma local
+    EstablecerLocale("spanish")
+
+    // Solicitar valores del rango
+    Imprimir "--------------------------------------------------------------------------"
+    Imprimir "\n\tPETICIÓN MÍNIMO Y MÁXIMO DEL RANGO"
+    Imprimir "--------------------------------------------------------------------------"
+    
+    // Solicitar el mínimo del rango
+    Repetir
+        Imprimir "\n\tIntroduce el número mínimo del rango: "
+        Leer rg1
+        Si rg1 < 0 Entonces
+            Imprimir "\n\tEl número mínimo del rango no puede ser menor que 0\n"
+        FinSi
+    Hasta que rg1 >= 0
+
+    // Solicitar el máximo del rango
+    Repetir
+        Imprimir "\n\tIntroduce el número máximo del rango: "
+        Leer rg2
+        Si rg2 <= rg1 Entonces
+            Imprimir "\n\tError: el número máximo debe ser mayor que el mínimo\n\n"
+        FinSi
+    Hasta que rg2 > rg1
+
+    LimpiarPantalla
+
+    // Solicitar cantidad de números a validar dentro del rango
+    Imprimir "--------------------------------------------------------------------------"
+    Imprimir "\n\tPETICIÓN: VALIDAR NÚMERO DENTRO DEL RANGO [" + rg1 + "-" + rg2 + "]"
+    Imprimir "--------------------------------------------------------------------------"
+    Imprimir "\n\tIntroduzca cuántos números quiere probar si están en el rango: "
+    Leer n
+
+    // Inicializar variables para la media y conteo de números válidos
+    media ← 0
+    summedia ← 0
+    iteraciones ← 0
+
+    // Validar cada número ingresado
+    Para i desde 0 hasta n-1 Hacer
+        Imprimir "\n\n\tIntroduce el número a validar: "
+        Leer num
+        Si num > rg1 y num < rg2 Entonces
+            Imprimir "\n\tEl número está dentro del rango"
+
+            // Calcular números pares menores que el número dado dentro del rango
+            p ← rg1 % 2
+            Si p == 0 Entonces
+                np ← rg1 + 2
+            Sino
+                np ← rg1 + 1
+            FinSi
+
+            cant ← 0
+            Imprimir "\n\tConjunto de pares inferiores a " + num + ":["
+
+            Mientras np < num Hacer
+                Si np % 2 == 0 Entonces
+                    Imprimir np + ","
+                    cant ← cant + 1
+                FinSi
+                np ← np + 1
+            FinMientras
+
+            Imprimir "]"
+            Imprimir "\n\tEl número de pares en el rango inferiores a " + num + " es: " + cant
+
+            summedia ← summedia + num
+            iteraciones ← iteraciones + 1
+        Sino
+            Imprimir "\n\tEl número está fuera del rango"
+        FinSi
+    FinPara
+
+    // Calcular e imprimir la media de los números dentro del rango
+    media ← summedia / iteraciones
+    Imprimir "\n\n\tLa media de los números dentro del rango es: " + media
+
+Fin
