@@ -99,25 +99,19 @@ int main()
                     scanf("%d", &rombo);
                     if (rombo<3){
                         printf("\tEl número debe ser mayor o igual a 3.\n");
-                    } else if (rombo/2 == 0); {
+                    } else if (rombo % 2 == 0); {
                         printf("\tEl número debe ser impar");
                     }
                 }while(rombo<=3 || rombo/2 == 0);
 
-                float mitad = rombo/2 - 0.5;
+                 int mitad = rombo / 2;
+
+                 printf("\n\n");
+
                 // Parte superior del rombo
-                for (i = mitad - 1; i >= 0; i++) {
-                    for (e = 0; e < mitad - i; e++) {
-                        printf(" ");
-                    }
-                    for (e = 0; e < 2*i +1; e++) {
-                        printf("*");
-                    }
-                    printf("\n");
-                }
-                //Parte inferior del rombo
-                for (i = mitad - 1; i >= 0; i--) {
+                for (i = 0; i <= mitad; i++) {
                     // Espacios a la izquierda
+                    printf("\t\t");
                     for (e = 0; e < mitad - i; e++) {
                         printf(" ");
                     }
@@ -127,6 +121,21 @@ int main()
                     }
                     printf("\n");
                 }
+
+                // Parte inferior del rombo
+                for (i = mitad - 1; i >= 0; i--) {
+                    // Espacios a la izquierda
+                    printf("\t\t");
+                    for (e = 0; e < mitad - i; e++) {
+                        printf(" ");
+                    }
+                    // Asteriscos
+                    for (e = 0; e < 2 * i + 1; e++) {
+                        printf("*");
+                    }
+                    printf("\n");
+                }
+
 
                 break;
         };
