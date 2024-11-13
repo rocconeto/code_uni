@@ -90,7 +90,7 @@ void leerCateto() {
     /**********************************************************************
     Subprograma: Leer Cateto
     Tarea que realiza: Solicita al usuario que introduzca un número real
-                       "c" y devuelve al pñunto de llamada el valor leido.
+                       "c" y devuelve al punto de llamada el valor leido.
 
     ***********************************************************************/
 }
