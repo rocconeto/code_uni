@@ -154,6 +154,27 @@ void dibujarTrianguloPascal() {
                        que haya introducido el usuario en el subprograma
                        pedirNumero()
     ***********************************************************************/
+    // Ahora no usa pedirNumero()
+    int filas;
+
+    // Solicitar cantidad de filas
+    printf("Introduce la cantidad de filas para el triángulo de Pascal: ");
+    scanf("%d", &filas);
+
+    // Generar cada fila del triángulo de Pascal
+    for (int i = 0; i < filas; i++) {
+        int valor = 1;
+
+        for (int j = 0; j < filas -i - 1; j++) {
+            printf("   ");
+        }
+
+        for (int j = 0; j <= i; j++) {
+            printf("%6d", valor);
+            valor = valor * (i - j) / (j + 1);
+        }
+        printf("\n")
+    }
 }
 
 // SUBPROGRAMAS PARA PROCESAR CARACTERES
