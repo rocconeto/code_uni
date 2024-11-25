@@ -1,4 +1,4 @@
-********************************************************
+/********************************************************
 Programa:           subprogramas.c
 Tarea que realiza:  Un menu principal que da acceso a
                     programas que a su vez contienen a
@@ -14,6 +14,7 @@ Fecha:              13/11/2024
 void triangulo();
 void pascal();
 void caracteres();
+void arrays();
 
 int main(){
 
@@ -21,37 +22,38 @@ int main(){
     setlocale(LC_ALL, "spanish");
 
     do {
-        system("pause");
-        system("cls");
-
         printf("--------------------------------------------------------------------------\n");
-        printf("\n\t\tMENU PRINCIPAL\n");
+        printf("\n\t\tMENÚ PRINCIPAL\n");
         printf("\n--------------------------------------------------------------------------\n");
-        printf("\t1. Calculos sobre triangulo\n");
-        printf("\t2. Dibujar triangulo de Pascal\n");
+        printf("\t1. Cálculos sobre un triángulo\n");
+        printf("\t2. Dibujar triángulo de Pascal\n");
         printf("\t3. Procesar cadena de caracteres\n");
+        printf("\t4. Procesar arrays de números enteros\n");
         printf("\t0. Salir\n");
 
 
         do{
-            printf("\n\tSeleccione una opcion: ");
+            printf("\n\tSeleccione una opción: ");
             scanf("%d", &opt);
-        }while (opt <0 || opt>=4);
+        }while (opt <0 || opt >4);
 
         system("pause");
         system("cls");
 
         switch(opt){
             case 1:
-                cuadrado();
-                break;
-            case 2:
                 triangulo();
                 break;
+            case 2:
+                pascal();
+                break;
             case 3:
-                rombo();
+                caracteres();
                 break;
             case 4:
+                arrays();
+                break;
+            case 0:
                 printf("\tSaliendo del programa...\n");
                 break;
         }
@@ -60,108 +62,138 @@ int main(){
     return 0;
 }
 
-// Programas principales
+// SUBPROGRAMA TRIÁNGULO
 void triangulo() {
-    int subopt;
+    //Definimos los subprogramas de esta opción
+    void leerCateto(int *c1, int *c2);
+    void calcularHipotenusa(int c1, int c2, float *h);
+    void calcularArea(int c1, int c2, float *A);
+    void calcularPerimetro(int c1, int c2, float h, int *P);
+    void mostrarResultado(int c1, int c2, float h, float A, int P);
 
-    do {
-        system("pause");
-        system("cls");
+    //Muestra el menú del subprograma
+    printf("--------------------------------------------------------------------------\n");
+    printf("\n\t\tCÁLCULOS SOBRE UN TRIANGULO");
+    printf("\n--------------------------------------------------------------------------\n");
 
-        printf("--------------------------------------------------------------------------\n");
-        printf("\n\t\tCALCULOS SOBRE UN TRIANGULO");
-        printf("\n--------------------------------------------------------------------------\n");
-        printf("\t1. Leer cateto\n");
-        printf("\t2. Leer calcular hipotenusa\n");
-    }
+    //Definimos variables y llamamos a los subprogramas
+    int c1, c2, P;
+    float A, h;
+    leerCateto(&c1, &c2);
+    calcularHipotenusa(c1, c2, &h);
+    calcularArea(c1, c2, &A);
+    calcularPerimetro(c1, c2, h, &P);
+    mostrarResultado(c1, c2, h, A, P);
 
+    system("pause");
+    system("cls");
 }
 
+//SUBPROGRAMAS DEL TRIÁNGULO
+/***************************************
+Subprograma: leerCateto
+Tarea: Pide un número que será el valor del cateto.
+Parámetros de S/: c1 (entero) y c2(entero)
+***************************************/
+void leerCateto(int *c1, int *c2){
+    do{
+        printf("\tIntroduce el valor del primer cateto: ");
+        scanf("%d", c1);
+    }while(c1<=0);
+    do{
+        printf("\tIntroduce el valor del segundo cateto: ");
+        scanf("%d", c2);
+    }while(c2<=0);
+}
+
+/*****************************************************
+Subprograma:        calcularHipotenusa
+Tarea:              Calcula y devuelve el valor de la
+                    hipotenusa del triangulo
+Parámetros de E/:   c1 (entero) y c2(entero)
+Parámetros de S/:   h(real)
+*****************************************************/
+void calcularHipotenusa(int c1, int c2, float *h){
+    *h = sqrt((c1*c1)+(c2*c2));
+}
+
+/*****************************************************
+Subprograma:        calcularArea
+Tarea:              Calcula y devuelve el valor del área
+                    del triangulo
+Parámetros de E/:   c1 (entero) y c2(entero)
+Parámetros de S/:   A(real)
+*****************************************************/
+void calcularArea(int c1, int c2, float *A){
+    *A = (c1*c2)/2;
+}
+
+/*****************************************************
+Subprograma:        calcularPerimetro
+Tarea:              Calcula y devuelve el valor del
+                    perímetro del triangulo
+Parámetros de E/:   c1 (entero), c2(entero) y h(real)
+Parámetros de S/:   P(entero)
+*****************************************************/
+void calcularPerimetro(int c1, int c2, float h, int *P){
+    *P = h + c1 + c2;
+}
+
+/*****************************************************
+Subprograma:        mostrarResultados
+Tarea:              Obtiene los datos de los otros subprogramas
+                    y los muestra por pantalla
+Parámetros de E/:   c1 (entero), c2(entero), h(real),
+                    A(real) y P(entero)
+*****************************************************/
+void mostrarResultado(int c1, int c2, float h, float A, int P){
+    printf("\n\tEl valor de los catetos es: %d y %d.", c1, c2);
+    printf("\n\tEl valor de la hipotenusa es: %.2f.", h);
+    printf("\n\tEl área del triángulo es: %.2f.", A);
+    printf("\n\tEl perímetro del triángulo es de: %d.\n\n", P);
+}
+
+// SUBPROGRAMA TRIÁNGULO DE PASCAL
 void pascal() {
+    //Declaramos los subprogramas
+    void pedirNumero(int *filas);
+    void dibujarTrianguloPascal(int filas);
 
+    //Muestra el menú del subprograma
+    printf("--------------------------------------------------------------------------\n");
+    printf("\n\t\tDIBUJAR TRIÁNGULO DE PASCAL");
+    printf("\n--------------------------------------------------------------------------\n");
+
+
+    int filas;
+    pedirNumero(&filas);
+    dibujarTrianguloPascal(filas);
+
+    system("pause");
+    system("cls");
 }
 
-void caracteres() {
-
-}
-
-// SUBPROGRAMAS DEL TRIANGULO
-void leerCateto() {
-    /**********************************************************************
-    Subprograma: Leer Cateto
-    Tarea que realiza: Solicita al usuario que introduzca un número real
-                       "c" y devuelve al punto de llamada el valor leido.
-
-    ***********************************************************************/
-}
-
-void calcularHipotenusa() {ç
-    /**********************************************************************
-    Subprograma: Calcular Hipotenusa
-    Tarea que realiza: Pasandole los catetos haciendo uso de la función
-                       anterior calcula el valor de la hipotenusa de la
-                       siguiente forma, y, devuelve al punto de llamada
-                       el resultado obtenido.
-
-    ***********************************************************************/
-}
-
-void calcularArea() {
-    /**********************************************************************
-    Subprograma: Calcular Area
-    Tarea que realiza: Calcula el area con los valores de los catetos que
-                       recibe como parametros y devuelve al punto de llamada
-                       el resultado obtenido.
-
-    ***********************************************************************/
-}
-
-void calcularPerimetro() {
-    /**********************************************************************
-    Subprograma: Calcular Perimetro
-    Tarea que realiza: Calcula el perimetro (siendo h, c1 y c2 parametros de
-                       este subprograma) y devuelve al puhnto de llamada el
-                       resultado obtenido.
-
-    ***********************************************************************/
-}
-
-void mostrarResultados() {
-    /**********************************************************************
-    Subprograma: Mostrar Resultados
-    Tarea que realiza: Recibe el resultado obtenido al ejecutar los
-                       subprogramas anteriores ymuestra dicho resultado del
-                       area, hipotenusa y perimetro en pantalla, así como
-                       los catetos considerados.
-
-    ***********************************************************************/
-}
 
 // SUBPROGRAMAS DEL TRIÁNGULO DE PASCAL
-void pedirNumero() {
-    /**********************************************************************
+/**********************************************************************
     Subprograma: Pedir Numero
     Tarea que realiza: Solicita al usuario un número entero mayor que 2
                        y será el número de filas del triángulo de Pascal.
-
-    ***********************************************************************/
+    Parámetros de S/: filas(entero)
+***********************************************************************/
+void pedirNumero(int *filas) {
+    printf("Introduce la cantidad de filas para el triángulo de Pascal: ");
+    scanf("%d", filas);
 }
 
-void dibujarTrianguloPascal() {
-    /**********************************************************************
+/**********************************************************************
     Subprograma: Dibujar Triangulo de Pascal
     Tarea que realiza: Dibuja un triangulo de Pascal con el numero de filas
                        que haya introducido el usuario en el subprograma
                        pedirNumero()
+    Parámetros de E/: filas(entero)
     ***********************************************************************/
-    // Ahora no usa pedirNumero()
-    int filas;
-
-    // Solicitar cantidad de filas
-    printf("Introduce la cantidad de filas para el triángulo de Pascal: ");
-    scanf("%d", &filas);
-
-    // Generar cada fila del triángulo de Pascal
+void dibujarTrianguloPascal(int filas) {
     for (int i = 0; i < filas; i++) {
         int valor = 1;
 
@@ -173,9 +205,19 @@ void dibujarTrianguloPascal() {
             printf("%6d", valor);
             valor = valor * (i - j) / (j + 1);
         }
-        printf("\n")
+        printf("\n");
     }
+    printf("\n\n");
 }
+
+void caracteres() {
+
+}
+
+void arrays(){
+
+}
+
 
 // SUBPROGRAMAS PARA PROCESAR CARACTERES
 void anagramaCadenas() {
