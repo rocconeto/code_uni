@@ -8,7 +8,7 @@
              devolviendo si lo son o no por pantalla.
 ***********************************************************/
 
-//Función para comprobar si son anagramas dos palabras
+//Función para comprobar si dos palabras son anagramas
 int anagramas(char word1[], char word2[]) {
     int conteo1[256] = {0};
     int conteo2[256] = {0};

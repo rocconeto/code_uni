@@ -90,11 +90,12 @@ void triangulo() {
 }
 
 //SUBPROGRAMAS DEL TRIÁNGULO
-/***************************************
-Subprograma: leerCateto
-Tarea: Pide un número que será el valor del cateto.
-Parámetros de S/: c1 (entero) y c2(entero)
-***************************************/
+/****************************************************
+Subprograma:        leerCateto
+Tarea:              Pide un número que será el valor
+                    del cateto.
+Parámetros de S/:   c1 (entero) y c2(entero)
+*****************************************************/
 void leerCateto(int *c1, int *c2){
     do{
         printf("\tIntroduce el valor del primer cateto: ");
@@ -176,10 +177,10 @@ void pascal() {
 
 // SUBPROGRAMAS DEL TRIÁNGULO DE PASCAL
 /**********************************************************************
-    Subprograma: Pedir Numero
-    Tarea que realiza: Solicita al usuario un número entero mayor que 2
-                       y será el número de filas del triángulo de Pascal.
-    Parámetros de S/: filas(entero)
+Subprograma:        pedirNumero
+Tarea que realiza:  Solicita al usuario un número entero mayor que 2
+                    y será el número de filas del triángulo de Pascal.
+Parámetros de S/:   filas(entero)
 ***********************************************************************/
 void pedirNumero(int *filas) {
     printf("Introduce la cantidad de filas para el triángulo de Pascal: ");
@@ -187,12 +188,12 @@ void pedirNumero(int *filas) {
 }
 
 /**********************************************************************
-    Subprograma: Dibujar Triangulo de Pascal
-    Tarea que realiza: Dibuja un triangulo de Pascal con el numero de filas
-                       que haya introducido el usuario en el subprograma
-                       pedirNumero()
-    Parámetros de E/: filas(entero)
-    ***********************************************************************/
+Subprograma:        dibujarTrianguloPascal
+Tarea que realiza:  Dibuja un triangulo de Pascal con el numero de filas
+                    que haya introducido el usuario en el subprograma
+                    pedirNumero()
+Parámetros de E/:   filas(entero)
+***********************************************************************/
 void dibujarTrianguloPascal(int filas) {
     for (int i = 0; i < filas; i++) {
         int valor = 1;
@@ -210,8 +211,54 @@ void dibujarTrianguloPascal(int filas) {
     printf("\n\n");
 }
 
-void caracteres() {
 
+// SUBPROGRAMA CARACTERES
+void caracteres() {
+    //Declaramos subprogramas
+    void anagramaCadenas();
+    void convertirMayuscConsonantes();
+    void crearCadenaInvertida();
+    void convertirCadenas();
+    int opc;
+
+    //Mostramos el menú
+    do {
+        printf("--------------------------------------------------------------------------\n");
+        printf("\n\t\tPROCESAR CADENA DE CARACTERES\n");
+        printf("\n--------------------------------------------------------------------------\n");
+        printf("\t1. Anagrama\n");
+        printf("\t2. Convertir a mayúscula las consonantes\n");
+        printf("\t3. Invertir cadena\n");
+        printf("\t4. Convirtiendo cadenas\n");
+        printf("\t0. Salir\n");
+
+
+        do{
+            printf("\n\tSeleccione una opción: ");
+            scanf("%d", &opc);
+        }while (opc <0 || opc >4);
+
+        system("pause");
+        system("cls");
+
+        switch(opc){
+            case 1:
+                anagramaCadenas();
+                break;
+            case 2:
+                convertirMayuscConsonantes();
+                break;
+            case 3:
+                crearCadenaInvertida();
+                break;
+            case 4:
+                convertirCadenas();
+                break;
+            case 0:
+                system("cls");
+                break;
+        }
+    } while (opc != 0);
 }
 
 void arrays(){
@@ -220,13 +267,84 @@ void arrays(){
 
 
 // SUBPROGRAMAS PARA PROCESAR CARACTERES
-void anagramaCadenas() {
-    /**********************************************************************
-    Subprograma: Anagrama
-    Tarea que realiza: Recibe dos palabras (string) y retorna si son o no
-                       anagramas.
+/**********************************************************************
+    Subprograma:        anagramaCadena
+    Tarea que realiza:  Solicita al usuario dos palabras, comprueba si son
+                        anagramas y muestra por pantalla el resultado.
+    Parámetros de E/:   word1(cadena caracateres) y word2(cadena caracteres)
+***********************************************************************/
+//Función para comprobar si dos palabras son anagramas
+int anagramas(char word1[], char word2[]) {
+    int conteo1[256] = {0};
+    int conteo2[256] = {0};
 
-    ***********************************************************************/
+    for (int i = 0; word1[i]; i++) {
+        conteo1[(unsigned char)word1[i]]++;
+    }
+    for (int i = 0; word2[i]; i++) {
+        conteo2[(unsigned char)word2[i]]++;
+    }
+
+    // Comparar los contadores de caracteres
+    for (int i = 0; i < 256; i++) {
+        if (conteo1[i] != conteo2[i]) {
+            return 0; // No son anagramas si los contadores no coinciden
+        }
+    }
+    return 1;
+}
+void anagramaCadenas() {
+    char word1[50];
+    char word2[50];
+    int long1, long2, i, e, j;
+
+    //Hacer que si no tienen la misma longitud o si es la misma palabra
+    //vuelva a pedir introducirlas.
+    fflush(stdin);
+    do{
+        //Pide la primera palabra y quita el salto de línea
+        printf("Introduce la primera palabra: ");
+        fgets(word1, sizeof(word1), stdin);
+        word1[strcspn(word1, "\n")] = '\0';
+
+        //Pide la segunda palabra y quita el salto de línea
+        printf("Introduce la segunda palabra: ");
+        fgets(word2, sizeof(word2), stdin);
+        word2[strcspn(word2, "\n")] = '\0';
+
+        //Calcula la longitud de cada palabra
+        long1 = strlen(word1);
+        long2 = strlen(word2);
+
+        if (long1 != long2){
+            printf("Las palabras tienen que tener la misma longitud.\n");
+        }
+    }while(long1 != long2);
+
+    //Comprueba si las dos palabras son iguales
+    j = 0;
+    for (i=0; i < long1; i++){
+        if ((word1[i] != "\0") && (word2[i] != "\0") && (word1[i]==word2[i])){
+            j = j+1;
+        }
+    }
+
+    if (j == long1){
+        printf("Dos palabras iguales no son anagramas");
+    }
+
+    //Comprueba si las palabras son anagramas
+    //Las palabras ya son de la misma longitud y no son iguales
+    if (anagramas(word1, word2)){
+        printf("Son anagramas\n\n");
+    } else{
+        printf("No son anagramas\n\n");
+    }
+
+    system("pause");
+    system("cls");
+
+    return 0;
 }
 
 void convertirMayuscConsonantes() {
