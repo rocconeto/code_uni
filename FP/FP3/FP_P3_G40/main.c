@@ -10,6 +10,7 @@ Fecha:              13/11/2024
 #include <stdlib.h>
 #include <string.h>
 #include <locale.h>
+#include <ctype.h>
 
 void triangulo();
 void pascal();
@@ -25,15 +26,15 @@ int main(){
         printf("--------------------------------------------------------------------------\n");
         printf("\n\t\tMENÚ PRINCIPAL\n");
         printf("\n--------------------------------------------------------------------------\n");
-        printf("\t1. Cálculos sobre un triángulo\n");
-        printf("\t2. Dibujar triángulo de Pascal\n");
-        printf("\t3. Procesar cadena de caracteres\n");
-        printf("\t4. Procesar arrays de números enteros\n");
-        printf("\t0. Salir\n");
+        printf("\n\t1. Cálculos sobre un triángulo\n");
+        printf("\n\t2. Dibujar triángulo de Pascal\n");
+        printf("\n\t3. Procesar cadena de caracteres\n");
+        printf("\n\t4. Procesar arrays de números enteros\n");
+        printf("\n\t0. Salir\n");
 
 
         do{
-            printf("\n\tSeleccione una opción: ");
+            printf("\n\n\tSeleccione una opción: ");
             scanf("%d", &opt);
         }while (opt <0 || opt >4);
 
@@ -54,7 +55,7 @@ int main(){
                 arrays();
                 break;
             case 0:
-                printf("\tSaliendo del programa...\n");
+                printf("\n\tSaliendo del programa...\n");
                 break;
         }
     } while (opt != 0);
@@ -73,7 +74,7 @@ void triangulo() {
 
     //Muestra el menú del subprograma
     printf("--------------------------------------------------------------------------\n");
-    printf("\n\t\tCÁLCULOS SOBRE UN TRIANGULO");
+    printf("\n\t\tCÁLCULOS SOBRE UN TRIANGULO\n");
     printf("\n--------------------------------------------------------------------------\n");
 
     //Definimos variables y llamamos a los subprogramas
@@ -98,11 +99,11 @@ Parámetros de S/:   c1 (entero) y c2(entero)
 *****************************************************/
 void leerCateto(int *c1, int *c2){
     do{
-        printf("\tIntroduce el valor del primer cateto: ");
+        printf("\n\tIntroduce el valor del primer cateto: ");
         scanf("%d", c1);
     }while(c1<=0);
     do{
-        printf("\tIntroduce el valor del segundo cateto: ");
+        printf("\n\tIntroduce el valor del segundo cateto: ");
         scanf("%d", c2);
     }while(c2<=0);
 }
@@ -148,9 +149,9 @@ Parámetros de E/:   c1 (entero), c2(entero), h(real),
                     A(real) y P(entero)
 *****************************************************/
 void mostrarResultado(int c1, int c2, float h, float A, int P){
-    printf("\n\tEl valor de los catetos es: %d y %d.", c1, c2);
-    printf("\n\tEl valor de la hipotenusa es: %.2f.", h);
-    printf("\n\tEl área del triángulo es: %.2f.", A);
+    printf("\n\n\tEl valor de los catetos es: %d y %d.\n", c1, c2);
+    printf("\n\tEl valor de la hipotenusa es: %.2f.\n", h);
+    printf("\n\tEl área del triángulo es: %.2f.\n", A);
     printf("\n\tEl perímetro del triángulo es de: %d.\n\n", P);
 }
 
@@ -162,7 +163,7 @@ void pascal() {
 
     //Muestra el menú del subprograma
     printf("--------------------------------------------------------------------------\n");
-    printf("\n\t\tDIBUJAR TRIÁNGULO DE PASCAL");
+    printf("\n\t\tDIBUJAR TRIÁNGULO DE PASCAL\n");
     printf("\n--------------------------------------------------------------------------\n");
 
 
@@ -183,7 +184,7 @@ Tarea que realiza:  Solicita al usuario un número entero mayor que 2
 Parámetros de S/:   filas(entero)
 ***********************************************************************/
 void pedirNumero(int *filas) {
-    printf("Introduce la cantidad de filas para el triángulo de Pascal: ");
+    printf("\n\tIntroduce la cantidad de filas para el triángulo de Pascal: ");
     scanf("%d", filas);
 }
 
@@ -195,6 +196,7 @@ Tarea que realiza:  Dibuja un triangulo de Pascal con el numero de filas
 Parámetros de E/:   filas(entero)
 ***********************************************************************/
 void dibujarTrianguloPascal(int filas) {
+    printf("\n");
     for (int i = 0; i < filas; i++) {
         int valor = 1;
 
@@ -214,10 +216,13 @@ void dibujarTrianguloPascal(int filas) {
 
 // SUBPROGRAMA CARACTERES
 void caracteres() {
+    char c1[50];
+
     //Declaramos subprogramas
     void anagramaCadenas();
     void convertirMayuscConsonantes();
-    void crearCadenaInvertida();
+    void cadena(char *c1[50]);
+    void crearCadenaInvertida(char c1[50]);
     void convertirCadenas();
     int opc;
 
@@ -226,15 +231,15 @@ void caracteres() {
         printf("--------------------------------------------------------------------------\n");
         printf("\n\t\tPROCESAR CADENA DE CARACTERES\n");
         printf("\n--------------------------------------------------------------------------\n");
-        printf("\t1. Anagrama\n");
-        printf("\t2. Convertir a mayúscula las consonantes\n");
-        printf("\t3. Invertir cadena\n");
-        printf("\t4. Convirtiendo cadenas\n");
-        printf("\t0. Salir\n");
+        printf("\n\t1. Anagrama\n");
+        printf("\n\t2. Convertir a mayúscula las consonantes\n");
+        printf("\n\t3. Invertir cadena\n");
+        printf("\n\t4. Convirtiendo cadenas\n");
+        printf("\n\t0. Salir\n");
 
 
         do{
-            printf("\n\tSeleccione una opción: ");
+            printf("\n\n\tSeleccione una opción: ");
             scanf("%d", &opc);
         }while (opc <0 || opc >4);
 
@@ -249,7 +254,8 @@ void caracteres() {
                 convertirMayuscConsonantes();
                 break;
             case 3:
-                crearCadenaInvertida();
+                cadena(&c1);
+                crearCadenaInvertida(c1);
                 break;
             case 4:
                 convertirCadenas();
@@ -268,10 +274,10 @@ void arrays(){
 
 // SUBPROGRAMAS PARA PROCESAR CARACTERES
 /**********************************************************************
-    Subprograma:        anagramaCadena
-    Tarea que realiza:  Solicita al usuario dos palabras, comprueba si son
-                        anagramas y muestra por pantalla el resultado.
-    Parámetros de E/:   word1(cadena caracateres) y word2(cadena caracteres)
+Subprograma:        anagramaCadena
+Tarea que realiza:  Solicita al usuario dos palabras, comprueba si son
+                    anagramas y muestra por pantalla el resultado.
+Parámetros de E/:   word1(cadena caracateres) y word2(cadena caracteres)
 ***********************************************************************/
 //Función para comprobar si dos palabras son anagramas
 int anagramas(char word1[], char word2[]) {
@@ -298,17 +304,21 @@ void anagramaCadenas() {
     char word2[50];
     int long1, long2, i, e, j;
 
+    printf("--------------------------------------------------------------------------\n");
+    printf("\n\t\tAnagrama\n");
+    printf("\n--------------------------------------------------------------------------\n");
+
     //Hacer que si no tienen la misma longitud o si es la misma palabra
     //vuelva a pedir introducirlas.
     fflush(stdin);
     do{
         //Pide la primera palabra y quita el salto de línea
-        printf("Introduce la primera palabra: ");
+        printf("\n\tIntroduce la primera palabra: ");
         fgets(word1, sizeof(word1), stdin);
         word1[strcspn(word1, "\n")] = '\0';
 
         //Pide la segunda palabra y quita el salto de línea
-        printf("Introduce la segunda palabra: ");
+        printf("\tIntroduce la segunda palabra: ");
         fgets(word2, sizeof(word2), stdin);
         word2[strcspn(word2, "\n")] = '\0';
 
@@ -317,7 +327,7 @@ void anagramaCadenas() {
         long2 = strlen(word2);
 
         if (long1 != long2){
-            printf("Las palabras tienen que tener la misma longitud.\n");
+            printf("\n\tLas palabras tienen que tener la misma longitud.\n");
         }
     }while(long1 != long2);
 
@@ -330,15 +340,11 @@ void anagramaCadenas() {
     }
 
     if (j == long1){
-        printf("Dos palabras iguales no son anagramas");
-    }
-
-    //Comprueba si las palabras son anagramas
-    //Las palabras ya son de la misma longitud y no son iguales
-    if (anagramas(word1, word2)){
-        printf("Son anagramas\n\n");
+        printf("\n\tDos palabras iguales no son anagramas\n\n");
+    } else if(anagramas(word1, word2)){
+        printf("\n\tSon anagramas\n\n");
     } else{
-        printf("No son anagramas\n\n");
+        printf("\n\tNo son anagramas\n\n");
     }
 
     system("pause");
@@ -347,26 +353,80 @@ void anagramaCadenas() {
     return 0;
 }
 
-void convertirMayuscConsonantes() {
-    /**********************************************************************
-    Subprograma: Convertir Mayusculas a Consonantes
-    Tarea que realiza: Solicita al usuario introducir una palabra y se crea
-                       una nueva cadena de caracteres formada por los de la
-                       solicitada al usuario pero con las consonantes en
-                       mayuscula.
 
-    ***********************************************************************/
+/**********************************************************************
+Subprograma:        convertirMayusculasConsonantes
+Tarea que realiza:  Solicita al usuario una palabras y pasa las
+                    consonantes a mayúscula
+Parámetros de E/:   word1(cadena caracateres)
+***********************************************************************/
+void convertirMayuscConsonantes() {
+    fflush(stdin);
+    //Declaramos variables
+    char vocales[5] = ("AEIOU");
+    char word1[50], word2[50];
+    int i, e;
+
+    printf("--------------------------------------------------------------------------\n");
+    printf("\n\t\tConvertir a Mayúsculas las Consonantes\n");
+    printf("\n--------------------------------------------------------------------------\n");
+
+    //Solicita la palabra al usuraio y la pasa a mayúsculas
+    printf("\n\tIntroduce una palabra: ");
+    fgets(word1, sizeof(word1), stdin);
+    word1[strcspn(word1, "\n")] = '\0';
+
+    strupr (word1);
+
+    //Pasa a mayúsculas las consonantes
+    for (i=0; word1[i]; i++){
+        for (e=0; vocales[e]; e++){
+            if (word1[i] == vocales[e]){
+                word1[i] = tolower(word1[i]);
+                break;
+            }
+        }
+    }
+
+    //Muestra la palabra con las consonantes en mayúscula
+    printf("\n\t%s\n", word1);
+
+    system("pause");
+    system("cls");
+}
+void cadena(char *c1[50]){
+    fflush(stdin);
+
+    //Pide una cadena de caracteres
+    printf("\n\tCadena: ");
+    fgets(c1, sizeof(c1), stdin);
+    c1[strcspn(c1, "\n")] = '\0';
+
+    system("pause");
+    system("cls");
 }
 
-void crearCadenaInvertida() {
-    /**********************************************************************
-    Subprograma: Crear Cadena Invertida
-    Tarea que realiza: A partir de una cadena que recibe como parámetro el
-                       subprograma, crea una nueva cadena que contiene la
-                       cadena invertida y muestra la cadena resultantes en
-                       pantalla.
+void crearCadenaInvertida(char c1[50]) {
+    //Declaramos variables
+    int i, longitud;
 
-    ***********************************************************************/
+    printf("--------------------------------------------------------------------------\n");
+    printf("\n\t\tInvertir Cadena Caracteres\n");
+    printf("\n--------------------------------------------------------------------------\n");
+
+    //Solicita la palabra al usuraio y la pasa a mayúsculas
+    printf("\n\tCadena original: %s", c1);
+
+    longitud = strlen(c1);
+
+    //Invierte la cadena
+    printf("\tCadena invertida: ");
+    for (i= longitud - 1; i >= 0; i--){
+        printf("%c", c1[i]);
+    }
+
+    system("pause");
+    system("cls");
 }
 
 void convertirCadenas() {
