@@ -3,6 +3,7 @@
 
 int main()
 {
+
     fflush(stdin);
     //Declaramos variables
     char c1[50];

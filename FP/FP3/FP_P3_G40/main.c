@@ -394,47 +394,55 @@ void convertirMayuscConsonantes() {
     system("pause");
     system("cls");
 }
+
+/**********************************************************************
+Subprograma:        cadena
+Tarea que realiza:  Solicita al usuario una cadena de caracteres y la
+                    almacena como parámetro
+Parámetros de E/:   word1(cadena caracateres)
+***********************************************************************/
 void cadena(char *c1[50]){
     fflush(stdin);
 
     //Pide una cadena de caracteres
-    printf("\n\tCadena: ");
-    fgets(c1, sizeof(c1), stdin);
-    c1[strcspn(c1, "\n")] = '\0';
+    printf("\n\tIntroduce una cadena de caracteres: ");
+    fgets(c1, 50, stdin);
 
     system("pause");
     system("cls");
 }
 
+/**********************************************************************
+Subprograma:        crearCadenaInnvertida
+Tarea que realiza:  Recibe una cadena como parámtero, la invierte y
+                    la muestra por pantalla
+Parámetros de E/:   word1(cadena caracateres)
+***********************************************************************/
 void crearCadenaInvertida(char c1[50]) {
-    //Declaramos variables
+    //Declaramos variables y quitamos el salto de línea a la cadena de caracteres
     int i, longitud;
+    c1[strcspn(c1, "\n")] = '\0';
 
     printf("--------------------------------------------------------------------------\n");
     printf("\n\t\tInvertir Cadena Caracteres\n");
     printf("\n--------------------------------------------------------------------------\n");
 
     //Solicita la palabra al usuraio y la pasa a mayúsculas
-    printf("\n\tCadena original: %s", c1);
+    printf("\n\tCadena original: %s\n", c1);
 
     longitud = strlen(c1);
 
     //Invierte la cadena
-    printf("\tCadena invertida: ");
+    printf("\n\tCadena invertida: ");
     for (i= longitud - 1; i >= 0; i--){
         printf("%c", c1[i]);
     }
+    printf("\n\n");
 
     system("pause");
     system("cls");
 }
 
 void convertirCadenas() {
-    /**********************************************************************
-    Subprograma: Convirtiendo Cadenas
-    Tarea que realiza: El subprograma recibira dos cadenas como parametro
-                       (cad1, cad2) e imprimirá otras dos cadenas como salida
-                       (cad3, cad4)
 
-    ***********************************************************************/
 }
