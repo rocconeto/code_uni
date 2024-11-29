@@ -217,13 +217,15 @@ void dibujarTrianguloPascal(int filas) {
 // SUBPROGRAMA CARACTERES
 void caracteres() {
     char c1[50];
+    char c2[50];
 
     //Declaramos subprogramas
     void anagramaCadenas();
     void convertirMayuscConsonantes();
     void cadena(char *c1[50]);
     void crearCadenaInvertida(char c1[50]);
-    void convertirCadenas();
+    void cadenas(char *c1[50], char *c2[50]);
+    void convertirCadenas(char c1[50], char c2[50]);
     int opc;
 
     //Mostramos el menú
@@ -258,7 +260,8 @@ void caracteres() {
                 crearCadenaInvertida(c1);
                 break;
             case 4:
-                convertirCadenas();
+                cadenas(&c1, &c2);
+                convertirCadenas(c1, c2);
                 break;
             case 0:
                 system("cls");
@@ -399,7 +402,7 @@ void convertirMayuscConsonantes() {
 Subprograma:        cadena
 Tarea que realiza:  Solicita al usuario una cadena de caracteres y la
                     almacena como parámetro
-Parámetros de E/:   word1(cadena caracateres)
+Parámetros de S/:   c1(cadena caracateres)
 ***********************************************************************/
 void cadena(char *c1[50]){
     fflush(stdin);
@@ -416,7 +419,7 @@ void cadena(char *c1[50]){
 Subprograma:        crearCadenaInnvertida
 Tarea que realiza:  Recibe una cadena como parámtero, la invierte y
                     la muestra por pantalla
-Parámetros de E/:   word1(cadena caracateres)
+Parámetros de E/:   c1(cadena caracateres)
 ***********************************************************************/
 void crearCadenaInvertida(char c1[50]) {
     //Declaramos variables y quitamos el salto de línea a la cadena de caracteres
@@ -443,6 +446,91 @@ void crearCadenaInvertida(char c1[50]) {
     system("cls");
 }
 
-void convertirCadenas() {
 
+/**********************************************************************
+Subprograma:        cadenas
+Tarea que realiza:  Solicita al usuario dos cadenas de caracteres y las
+                    almacena como parámetros
+Parámetros de S/:   c1(cadena caracateres) y c2(cadena de caracteres)
+***********************************************************************/
+void cadenas(char *c1[50], char *c2[50]){
+    fflush(stdin);
+
+    //Pide las cadenas de caracteres
+    printf("\n\tIntroduce una cadena de caracteres: ");
+    fgets(c1, 50, stdin);
+
+    printf("\n\tIntroduce otra cadena de caracteres: ");
+    fgets(c2, 50, stdin);
+
+    system("pause");
+    system("cls");
+}
+
+/**********************************************************************
+Subprograma:        convertirCadenas
+Tarea que realiza:  Recibe dos cadenas de caracteres como parámteros y las
+                    convierte teniendo en cuenta los caracteres que están
+                    en una de ellas pero no en la otra, también muestra
+                    los caracteres omitidos.
+Parámetros de S/:   c1(cadena caracateres) y c2(cadena de caracteres)
+***********************************************************************/
+void convertirCadenas(char c1[50], char c2[50]) {
+    //Declaramos las cadenas resultantes y otras variables
+    char c3[50], c4[50];
+    int o = 0, p = 0; //Para las cantidades de caracteres omitidos
+    int c = 0, d = 0;
+
+    //Quita los saltos de línea a las cadenas de caracteres
+    c1[strcspn(c1, "\n")] = '\0';
+    c2[strcspn(c2, "\n")] = '\0';
+
+    //Muestra el título del programa
+    printf("--------------------------------------------------------------------------\n");
+    printf("\n\t\tConvertir Cadenas de CAracteres\n");
+    printf("\n--------------------------------------------------------------------------\n");
+
+    //Muestra las cadenas originales calcula y muestra los caracteres omitidos
+    printf("\n\tCADENA ORIGINAL\t\t\tCADENA CONVERTIDA\t\tCARACTERES OMITIDOS\n");
+
+    //Muestra la cadena 1, luego la convierte y muestra la cadena convertida y los elementos omitidos
+    printf("\n\tCadena 1: %s\t", c1);
+
+    for (int i=0; c1[i]; i++){
+        int presente = 0; //Si encuentra un caracter en c2 igual al de c1 cambia su valor
+        //si no encuentra ninguno, sirve para añadir a c3 los caracteres
+        for (int e=0; c2[e]; e++){
+            if (c1[i] == c2[e]){
+                o++;
+                presente = 1;
+                break;
+            }
+        }
+        if (presente == 0){
+            c3[c++] = c1[i];
+        }
+    }
+    printf("\t%s\t\t\t\t%d elementos omitidos\n", c3, o);
+
+    //Hace lo mismo con la cadena 2
+    printf("\n\tCadena 2: %s", c2);
+
+    for (int i=0; c2[i]; i++){
+        int presente = 0; //Si encuentra un caracter en c2 igual al de c1 cambia su valor
+        //si no encuentra ninguno, sirve para añadir a c3 los caracteres
+        for (int e=0; c1[e]; e++){
+            if (c2[i] == c1[e]){
+                p++;
+                presente = 1;
+                break;
+            }
+        }
+        if (presente == 0){
+            c4[d++] = c2[i];
+        }
+    }
+    printf("\t%s\t\t\t\t%d elementos omitidos\n\n", c4, p);
+
+    system("pause");
+    system("cls");
 }
