@@ -270,10 +270,6 @@ void caracteres() {
     } while (opc != 0);
 }
 
-void arrays(){
-
-}
-
 
 // SUBPROGRAMAS PARA PROCESAR CARACTERES
 /**********************************************************************
@@ -476,6 +472,8 @@ Tarea que realiza:  Recibe dos cadenas de caracteres como parámteros y las
 Parámetros de S/:   c1(cadena caracateres) y c2(cadena de caracteres)
 ***********************************************************************/
 void convertirCadenas(char c1[50], char c2[50]) {
+
+
     //Declaramos las cadenas resultantes y otras variables
     char c3[50], c4[50];
     int o = 0, p = 0; //Para las cantidades de caracteres omitidos
@@ -530,6 +528,169 @@ void convertirCadenas(char c1[50], char c2[50]) {
         }
     }
     printf("\t%s\t\t\t\t%d elementos omitidos\n\n", c4, p);
+
+    system("pause");
+    system("cls");
+}
+
+//SUBPROGRAMA ARRAYS DE NÚMEROS ENTEROS
+void arrays(){
+    //Declaramos los arrays necesarios y los subprogramas
+    int tabla1 [5], tabla2[5], tablaSuma[5], opc;
+    void sumaArrays(int tabla1[5], int tabla2[5], int tablaSuma[5]);
+    void multiplicacionArrays(int tabla1[5], int tabla2[5]);
+    void interseccionArrays(int tabla1[5], int tabla2[5]);
+
+    //Comienza la ejecución pidiendo los 10 números
+    for (int i = 0; i < 5; i++){
+        printf("\n\tIntroduce un número: ");
+        scanf("%d", &tabla1[i]);
+    }
+    for (int i = 0; i < 5; i++){
+        printf("\n\tIntroduce un número: ");
+        scanf("%d", &tabla2[i]);
+    }
+
+    system("pause");
+    system("cls");
+
+    do {
+        printf("--------------------------------------------------------------------------\n");
+        printf("\n\t\tPROCESAR ARRAYS DE NÚMEROS ENTEROS\n");
+        printf("\n--------------------------------------------------------------------------\n");
+        printf("\n\t1. Suma\n");
+        printf("\n\t2. Multiplicación\n");
+        printf("\n\t3. Intersección\n");
+        printf("\n\t0. Salir\n");
+
+
+        do{
+            printf("\n\n\tSeleccione una opción: ");
+            scanf("%d", &opc);
+        }while (opc <0 || opc >3);
+
+        system("pause");
+        system("cls");
+
+        switch(opc){
+            case 1:
+                sumaArrays(tabla1, tabla2, tablaSuma);
+                printf("--------------------------------------------------------------------------\n");
+                printf("\n\t\tSUMA DE ARRAYS\n");
+                printf("\n--------------------------------------------------------------------------\n");
+
+                //Muestra el resultado de la ejecución del subprograma
+                printf("\n\ttablaSuma = [");
+                for (int i = 0; tablaSuma[i]; i++){
+                    printf(" %d", tablaSuma[i]);
+                }
+                printf("]\n");
+
+                system("pause");
+                system("cls");
+                break;
+            case 2:
+                multiplicacionArrays(tabla1, tabla2);
+                break;
+            case 3:
+                interseccionArrays(tabla1, tabla2);
+                break;
+            case 0:
+                system("cls");
+                break;
+        }
+    } while (opc != 0);
+
+
+}
+
+//SUBPROGRAMAS PARA PROCESAR ARRAYS
+/**********************************************************************
+Subprograma:        sumaArrays
+Tarea que realiza:  Recibe dos arrays de números enteros y suma ambos
+                    arrays. Guarda la suma en un parámetro llamado
+                    tablaSuma.
+Parámetros de E/:   tabla1(array de enteros) y tabla2(array de enteros)
+Parámetros de S/:   tablaSuma(array de enteros)
+***********************************************************************/
+void sumaArrays(int tabla1[5], int tabla2[5], int tablaSuma[5]){
+    //Mostramos un título
+    printf("\n\tSUMA\n");
+    printf("----------------------\n");
+
+    //Ejecuta las operaciones
+    for (int i = 0; i < 5; i++) {
+        tablaSuma[i] = tabla1[i] + tabla2[i];
+    }
+
+    system("pause");
+    system("cls");
+}
+
+/**********************************************************************
+Subprograma:        multiplicacionArrays
+Tarea que realiza:  Recibe dos arrays de números enteros y multiplica ambos
+                    arrays. Después, muestra el resultado por pantalla.
+Parámetros de E/:   tabla1(array de enteros) y tabla2(array de enteros)
+***********************************************************************/
+void multiplicacionArrays(int tabla1[5], int tabla2[5]){
+    //Declaramos un array para la multiplicación de los dos arrays
+    int tablaMultiplicacion[5];
+
+    //Mostramos el título
+    printf("--------------------------------------------------------------------------\n");
+    printf("\n\t\MULTIPLICACIÓN DE ARRAYS\n");
+    printf("\n--------------------------------------------------------------------------\n");
+
+    //Ejecuta la multiplicación
+    for (int e = 0; e < 5; e++){
+        tablaMultiplicacion[e] = tabla1[e] * tabla2[e];
+    }
+
+    //Muestra los resultados
+    printf("\n\ttablaMultiplicación = [");
+    for (int i = 0; tablaMultiplicacion[i]; i++){
+        printf(" %d", tablaMultiplicacion[i]);
+    }
+    printf("]\n");
+
+    system("pause");
+    system("cls");
+}
+
+/**********************************************************************
+Subprograma:        interseccionArrays
+Tarea que realiza:  Recibe dos arrays de números enteros y calcula la
+                    la intersección de ambos arrays. Después, muestra
+                    el resultado por pantalla.
+Parámetros de E/:   tabla1(array de enteros) y tabla2(array de enteros)
+***********************************************************************/
+void interseccionArrays(int tabla1[5], int tabla2[5]){
+    //Declaramos una variable para la intersección
+    int tablaInterseccion[5];
+    int k = 0; //Contador para el array tablaInterseccion
+
+    //Mostramos el título
+    printf("--------------------------------------------------------------------------\n");
+    printf("\n\t\INTERSECCIÓN DE ARRAYS\n");
+    printf("\n--------------------------------------------------------------------------\n");
+
+    //Calcula la intersección y después la muestra
+    for (int i = 0; tabla1[i]; i++){
+        for (int e = 0; tabla2[e]; e++){
+            if(tabla1[i] == tabla2[e]){
+                tablaInterseccion[k] = tabla1[i];
+                k++;
+                break;
+            }
+        }
+    }
+
+    printf("\n\ttablaInterseccion = [");
+    for (int i = 0; tablaInterseccion[i]; i++){
+        printf(" %d", tablaInterseccion[i]);
+    }
+    printf("]\n");
 
     system("pause");
     system("cls");
