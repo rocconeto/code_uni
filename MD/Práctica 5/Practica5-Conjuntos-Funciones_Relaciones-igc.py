@@ -1,8 +1,3 @@
-# -*- coding: utf-8 -*-
-"""
-
-"""
-
 #PRÁCTICA	5: CONJUNTOS, FUNCIONES y RELACIONES 2024-2025
 
 #PARA CADENAS DE CARACTERES
