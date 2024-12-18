@@ -1,0 +1,137 @@
+#PRÁCTICA 6: FUNCIONES Y PROCEDIMIENTOS
+
+#Función que determina si un entero es primo
+
+def esPrimo (entero):
+    assert isinstance(entero, int) and entero > 1 #isinstance recibe como argumentos 
+    #un objeto y una clase y devuelve True si el objeto corresponde a esa clase
+    res = True
+    x = 2 #se inicializa en 2 ya que es el primer primo
+    while (res == True) and (x < entero):
+        if (entero % x == 0):
+            res = False
+        x = x + 1 #Después de cada iteración, se incrementa x en 1
+    return(res)
+
+#NOTA: solo debe haber un return en la última línea.
+#La primera línea (assert) comprueba si entero es un entero mayor que 1.
+#En vez de isinstance(entero, int) se podía haber escrito type(entero)==int.
+# una vez definida se puede usar en la sesión con parámetros entre paréntesis
+
+esPrimo(7)
+esPrimo(8)
+
+#lo que hace es, para cada entero, comienza en 2 y subiendo de uno en uno, comprueba
+#si cada número divide al entero. Si alguno lo hace, se para y dice que no es primo. Si
+#no encuentra ninguno y llega al valor del entero, dice que es primo. #NO ES EFICIENTE.
+
+
+#Función que calcula la suma de los cuadrados desde 0 hasta n (incluido)
+
+def sumaCuadrados(n):
+    suma = 0 #La variable x se inicializa en 0, que almacenará la suma de los cuadrados.
+    for i in range(1,n+1): #El bucle for itera sobre los números desde 1 hasta n.
+        suma += i**2 
+    return(suma)
+    
+suma = 1
+
+sumaCuadrados(3) #14=1+4+9
+
+# terminada la función, "suma" volverá a valer 1
+suma
+
+# la variable i dentro de la función ya no existe (no está definida en el workspace global,
+#sino que lo estaba en el interno de la función)
+i
+
+# programación recursiva: se llama a sí misma con un valor menor
+#calcula el término n-ésimo de la sucesión de Fibonacci. 
+#La sucesión de Fibonacci es una secuencia matemática en la que cada término es la suma
+# de los dos términos anteriores
+
+#     {0 si n = 0
+#F(n) {1 si n = 1
+#     {F(n-1) + F(n-2) si n > 1
+
+def fibonacci(n):
+    # Caso base: si n es 0 o 1, se retorna n
+    if n <= 1:
+        return n
+    else:
+        termino=fibonacci(n - 1) + fibonacci(n - 2)
+        return termino
+
+
+fibonacci(0)
+fibonacci(1)
+fibonacci(2)
+fibonacci(3)
+fibonacci(4)
+fibonacci(5)
+fibonacci(6)
+
+# lo damos en forma de lista, más eficiente
+[fibonacci(n) for n in range(20)]
+
+#otra forma
+
+lista=[]
+for n in range(20):
+    lista.append(fibonacci(n))
+
+print(lista)
+
+#EJEMPLO: procedimiento que escribe un número en base 3 (ternario).
+
+#"""Convierte un entero no negativo a ternario.
+
+def ternario(n):
+    assert isinstance(n, int) and (n >= 0) #verfica que n es un entero no negativo
+    N = []
+    q = n
+    while q >= 3:
+        N.append(q % 3) #guarda el resto en la lista N
+        q = q // 3 #division entera, calcula el cociente y lo actualiza en q
+    N.append(q) #Una vez termina el bucle, el último residuo se agrega a la lista N 
+    #(esto es necesario porque el bucle se detiene cuando q ya no es mayor o igual a 3).
+    N.reverse() #invertimos los digitos, ya que se deben colocar en el orden inverso, revisar problemas del Tema 1
+    N = map(str, N) #convierto a strings
+    s = ''.join(N) #se concatenan
+    return(s)
+
+ternario(56)
+import numpy as np
+np.base_repr(56, base=3)
+
+#EJERCICIOS:
+
+#(1) Mejorar la función esPrimo, llamándola EsPrimo, de manera que: 
+    
+#(a) se compruebe mediante un if que el número introducido es entero y mayor que 1 
+#e imprima un mensaje de error en el caso contrario (else)
+
+#(b) no se comprueben los elementos pares al no ser necesario 
+
+#(c) no se evalúen elementos mayores que la raiz cuadrada del entero introducido, 
+#tal y como indica el ALGORITMO DE PRUEBA DE DIVISIÓN DEL TEMA 1
+
+
+#(2) Escribir una función que reciba, mediante una lista, los 9 primeros dígitos
+#de un ISBN, calcule el último dígito de control, y devuelva una lista con 
+#el ISBN de 10 cifras completo. 
+
+#"El dígito de control de un ISBN de diez cifras se halla mediante un cálculo basado 
+#en el módulo 11: Se multiplica cada uno de los nueve primeros dígitos por la posición 
+#que ocupan en la secuencia numérica, es decir, el primero por 1, el segundo por dos, 
+#y así sucesivamente, hasta el noveno que se multiplica por 9. Luego se suman estas 
+#multiplicaciones y el resultado se divide entre 11. Dicha división dejará un resto 
+#entre 0 y 10. Si el resto está entre 0 y 9, este mismo valor es el del dígito de control. 
+#Pero si el resto es 10, entonces se establece como dígito de control la letra X."
+
+
+#(3) Escribir una función que devuelva los valores de los máximos locales de una
+#lista de números introducida. Los máximos locales se definen como aquellos valores
+#mayores que sus dos elementos adyacentes (deben tener dos adyacentes, no se aceptan los extremos). 
+#Escribe otra función para calcular los mínimos locales.
+#Comprueba los resultados de la función genérica para el listado [1, 3, 2, 1, 4, 6, 2, 0]

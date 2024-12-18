@@ -81,59 +81,57 @@ modInverse(13, 17)
 modInverse(13, 2436)
 
 #12 Resolver las congruencias modulares:
-from sympy.solvers.diophantine import diophantine
-from sympy import symbols
-x, y = symbols("x, y", integer=True)
+def extended_euclidean(a, b):
+    """
+    Algoritmo extendido de Euclides.
+    Devuelve una tupla (gcd, x, y) tal que gcd es el máximo común divisor de a y b,
+    y x, y son los coeficientes que satisfacen la identidad de Bézout: ax + by = gcd(a, b).
+    """
+    if b == 0:
+        return a, 1, 0
+    else:
+        gcd, x1, y1 = extended_euclidean(b, a % b)
+        x = y1
+        y = x1 - (a // b) * y1
+        return gcd, x, y
 
-def resolver(n, r, m):
-    print(f"La solución general como ec.diofántica de {n}x = r mod({m}) es:", diophantine(n*x-m*y-r))
-    
-#cada lista corresponde a una congruencia siendo [0] el numero que multiplica
-# a x, [1] el resto y [2] el módulo
-congruencias = [
-        [6, 0, 15],
-        [4, 1, 15],
-        [6, 3, 15],
-        [6, 5, 15],
-        [6, 1, 15],
-        [4, 0, 15],
-        [4, 7, 15],
-        [6, 9, 15]
-    ]
+def solve_linear_congruence(a, b, m):
+    """
+    Resuelve la congruencia lineal ax === b (mod m).
+    Devuelve una lista con las soluciones, o una lista vacía si no hay soluciones.
+    """
+    # Paso 1: Calculamos gcd(a, m) y los coeficientes x e y usando el algoritmo extendido de Euclides
+    gcd, x, _ = extended_euclidean(a, m)
 
-for i in congruencias:
-    resolver(n=i[0], r=i[1], m=i[2])
-    
-test = list(diophantine(6*x-15*y-0))
-type(test[0])
-#13 Halla todas las soluciones del sistema de congruencias
-from sympy.solvers.diophantine import diophantine
-from sympy import symbols
+    # Paso 2: Verificamos si la congruencia tiene solución
+    if b % gcd != 0:
+        return []  # No hay soluciones
 
-x, y = symbols("x, y", integer=True)
+    # Paso 3: Reducimos el problema dividiendo entre gcd
+    a_reduced = a // gcd
+    b_reduced = b // gcd
+    m_reduced = m // gcd
 
-def get_x(n, r, m):
-    ec = diophantine(n*x-m*y-r)
-    ec = list(ec)
-    return ec[0][0]
+    # Paso 4: Encontramos una solución particular
+    x0 = (x * b_reduced) % m_reduced
 
-def resol_sist(sistema):
-    resultados_indp = []
-    for i in sistema:
-        resultados_indp.append(get_x(i[0], i[1], i[2]))
-    return print(resultados_indp)
-    
+    # Paso 5: Generamos todas las soluciones
+    solutions = [(x0 + k * m_reduced) % m for k in range(gcd)]
+    return solutions
 
-#cada lista corresponde a una congruencia siendo [0] el numero que multiplica
-# a x, [1] el resto y [2] el módulo
-sist = [
-        [1, 1, 2],
-        [1, 2, 3],
-        [1, 3, 5],
-        [1, 4, 11]
-    ]
+# Ejemplo de uso
+print("Resuelve la congruencia lineal ax ≡ b (mod m)")
+a = int(input("Introduce a: "))
+b = int(input("Introduce b: "))
+m = int(input("Introduce m: "))
 
-resol_sist(sist)
+solutions = solve_linear_congruence(a, b, m)
+
+if solutions:
+    print(f"Las soluciones son: {solutions}")
+else:
+    print("No hay soluciones.")
+
 
 
 
