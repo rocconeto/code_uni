@@ -1,0 +1,6 @@
+# depslib dependency file v1.0
+1732638592 source:c:\users\miguel raúl y david\desktop\code_uni\fp\fp3\anagrama\main.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+

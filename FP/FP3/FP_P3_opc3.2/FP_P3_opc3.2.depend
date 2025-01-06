@@ -1,0 +1,7 @@
+# depslib dependency file v1.0
+1732792252 source:c:\users\miguel raúl y david\desktop\code_uni\fp\fp3\fp_p3_opc3.2\main.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<ctype.h>
+

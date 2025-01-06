@@ -1,0 +1,13 @@
+# depslib dependency file v1.0
+1731489516 source:c:\users\uva\desktop\fp_p3_g40\main.c
+	<stdio.h>
+	<stdlib.h>
+	<math.h>
+	<locale.h>
+
+1731489518 source:c:\users\miguel raúl y david\desktop\code_uni\fp\fp3\fp_p3_opc1\main.c
+	<stdio.h>
+	<stdlib.h>
+	<math.h>
+	<locale.h>
+

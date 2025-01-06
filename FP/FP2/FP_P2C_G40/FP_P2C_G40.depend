@@ -1,0 +1,12 @@
+# depslib dependency file v1.0
+1730276738 source:c:\users\miguel raúl y david\documents\raúl\uni\fp\lab\fp_p2c_g40\main.c
+	<stdio.h>
+	<stdlib.h>
+	<locale.h>
+
+1730886036 source:c:\users\miguel raúl y david\desktop\code_uni\fp\fp2\fp_p2c_g40\main.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<locale.h>
+

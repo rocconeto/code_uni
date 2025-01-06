@@ -12,15 +12,18 @@ Fecha:              13/11/2024
 #include <locale.h>
 #include <ctype.h>
 
+void mensajeBienvenida();
 void triangulo();
 void pascal();
 void caracteres();
 void arrays();
+void mensajeDespedida();
 
 int main(){
-
     int opt;
     setlocale(LC_ALL, "spanish");
+
+    mensajeBienvenida();
 
     do {
         printf("--------------------------------------------------------------------------\n");
@@ -55,12 +58,24 @@ int main(){
                 arrays();
                 break;
             case 0:
-                printf("\n\tSaliendo del programa...\n");
+                mensajeDespedida();
                 break;
         }
     } while (opt != 0);
 
     return 0;
+}
+
+/****************************************************
+Subprograma:        mensajeBienvenida
+Tarea:              Muestra por pantalla un pequeño mensaje
+                    que da la bienvenida al usuario.
+*****************************************************/
+void mensajeBienvenida(){
+    printf("\n\tBienvenido a la aplicación Gestor Menú\n");
+
+    system("pause");
+    system("cls");
 }
 
 // SUBPROGRAMA TRIÁNGULO
@@ -218,27 +233,22 @@ void dibujarTrianguloPascal(int filas) {
 void caracteres() {
     char c1[50];
     char c2[50];
+    char word1[50];
+    int modificaciones;
+    char c3[50], c4[50];
+    int o, p; //Para las cantidades de caracteres omitidos
 
     //Declaramos subprogramas
+    void submenuCadena();
     void anagramaCadenas();
-    void convertirMayuscConsonantes();
-    void cadena(char *c1[50]);
+    int convertirMayuscConsonantes(char word1[50]);
     void crearCadenaInvertida(char c1[50]);
-    void cadenas(char *c1[50], char *c2[50]);
-    void convertirCadenas(char c1[50], char c2[50]);
+    void convertirCadenas(int *o, int *p, char c1[50], char c2[50], char c3[50], char c4[50]);
     int opc;
 
     //Mostramos el menú
     do {
-        printf("--------------------------------------------------------------------------\n");
-        printf("\n\t\tPROCESAR CADENA DE CARACTERES\n");
-        printf("\n--------------------------------------------------------------------------\n");
-        printf("\n\t1. Anagrama\n");
-        printf("\n\t2. Convertir a mayúscula las consonantes\n");
-        printf("\n\t3. Invertir cadena\n");
-        printf("\n\t4. Convirtiendo cadenas\n");
-        printf("\n\t0. Salir\n");
-
+        submenuCadena();
 
         do{
             printf("\n\n\tSeleccione una opción: ");
@@ -253,15 +263,64 @@ void caracteres() {
                 anagramaCadenas();
                 break;
             case 2:
-                convertirMayuscConsonantes();
+                //Muestra el título
+                printf("--------------------------------------------------------------------------\n");
+                printf("\n\t\tConvertir a Mayúsculas las Consonantes\n");
+                printf("\n--------------------------------------------------------------------------\n");
+
+                fflush(stdin);
+                //Solicita la palabra al usuraio y la pasa a mayúsculas
+                printf("\n\tIntroduce una palabra: ");
+                fgets(word1, sizeof(word1), stdin);
+                word1[strcspn(word1, "\n")] = '\0';
+
+                //LLama al subprograma y muestra el resultado
+                modificaciones = convertirMayuscConsonantes(word1);
+                printf("\n\tCADENA con CONSONANTES en MAYÚSCULAS:");
+                printf("\t%s\n", word1);
+                printf("\n\tSe han comvertido en mayúsculas %d letras.\n", modificaciones);
+
+                system("pause");
+                system("cls");
                 break;
             case 3:
-                cadena(&c1);
+                fflush(stdin);
+                printf("--------------------------------------------------------------------------\n");
+                printf("\n\t\tInvertir Cadena Caracteres\n");
+                printf("\n--------------------------------------------------------------------------\n");
+
+                //Pide una cadena de caracteres
+                printf("\n\tIntroduce una cadena de caracteres: ");
+                fgets(c1, 50, stdin);
+                system("pause");
+                system("cls");
+
                 crearCadenaInvertida(c1);
                 break;
             case 4:
-                cadenas(&c1, &c2);
-                convertirCadenas(c1, c2);
+                fflush(stdin);
+                printf("--------------------------------------------------------------------------\n");
+                printf("\n\t\tConvertir Cadenas de Caracteres\n");
+                printf("\n--------------------------------------------------------------------------\n");
+
+                //Pide las cadenas de caracteres
+                printf("\n\tIntroduce una cadena de caracteres: ");
+                fgets(c1, 50, stdin);
+
+                printf("\n\tIntroduce otra cadena de caracteres: ");
+                fgets(c2, 50, stdin);
+
+                system("pause");
+                system("cls");
+                convertirCadenas(&o, &p, c1, c2, c3, c4);
+
+                //Muestra las cadenas originales y las resultantes
+                printf("\n\tCADENA ORIGINAL\t\t\tCADENA CONVERTIDA\t\tCARACTERES OMITIDOS\n");
+                printf("\n\tCadena 1: %s\t\tCadena 3:%s\t\t\t%d caracteres omitidos", c1, c3, o);
+                printf("\n\tCadena 2: %s\t\tCadena 4:%s\t\t\t%d caracteres omitidos\n", c2, c4, p);
+
+                system("pause");
+                system("cls");
                 break;
             case 0:
                 system("cls");
@@ -272,6 +331,22 @@ void caracteres() {
 
 
 // SUBPROGRAMAS PARA PROCESAR CARACTERES
+/**********************************************************************
+Subprograma:        submenuCadena
+Tarea que realiza:  muestra por pantalla el submenú de la opción 3
+***********************************************************************/
+void submenuCadena(){
+    printf("--------------------------------------------------------------------------\n");
+    printf("\n\t\tPROCESAR CADENA DE CARACTERES\n");
+    printf("\n--------------------------------------------------------------------------\n");
+    printf("\n\t1. Anagrama\n");
+    printf("\n\t2. Convertir a mayúscula las consonantes\n");
+    printf("\n\t3. Invertir cadena\n");
+    printf("\n\t4. Convirtiendo cadenas\n");
+    printf("\n\t0. Salir\n");
+}
+
+
 /**********************************************************************
 Subprograma:        anagramaCadena
 Tarea que realiza:  Solicita al usuario dos palabras, comprueba si son
@@ -358,58 +433,25 @@ Subprograma:        convertirMayusculasConsonantes
 Tarea que realiza:  Solicita al usuario una palabras y pasa las
                     consonantes a mayúscula
 Parámetros de E/:   word1(cadena caracateres)
+Parámetros de S/:   word1(cadena caracateres)
 ***********************************************************************/
-void convertirMayuscConsonantes() {
-    fflush(stdin);
-    //Declaramos variables
-    char vocales[5] = ("AEIOU");
-    char word1[50], word2[50];
-    int i, e;
+int convertirMayuscConsonantes(char word1[50]) {
+    int contador = 0; // Contador para las letras modificadas
 
-    printf("--------------------------------------------------------------------------\n");
-    printf("\n\t\tConvertir a Mayúsculas las Consonantes\n");
-    printf("\n--------------------------------------------------------------------------\n");
-
-    //Solicita la palabra al usuraio y la pasa a mayúsculas
-    printf("\n\tIntroduce una palabra: ");
-    fgets(word1, sizeof(word1), stdin);
-    word1[strcspn(word1, "\n")] = '\0';
-
-    strupr (word1);
-
-    //Pasa a mayúsculas las consonantes
-    for (i=0; word1[i]; i++){
-        for (e=0; vocales[e]; e++){
-            if (word1[i] == vocales[e]){
-                word1[i] = tolower(word1[i]);
-                break;
+    for (int i = 0; word1[i] != '\0'; i++) {
+        // Verificar si es una letra y no es vocal
+        if (isalpha(word1[i]) &&
+           (word1[i] != 'a' && word1[i] != 'e' && word1[i] != 'i' && word1[i] != 'o' && word1[i] != 'u') &&
+           (word1[i] != 'A' && word1[i] != 'E' && word1[i] != 'I' && word1[i] != 'O' && word1[i] != 'U')) {
+            if (islower(word1[i])) { // Solo cuenta si se modifica realmente
+                word1[i] = toupper(word1[i]);
+                contador++;
             }
         }
     }
-
-    //Muestra la palabra con las consonantes en mayúscula
-    printf("\n\t%s\n", word1);
-
-    system("pause");
-    system("cls");
+    return contador; // Retorna el número de modificaciones
 }
 
-/**********************************************************************
-Subprograma:        cadena
-Tarea que realiza:  Solicita al usuario una cadena de caracteres y la
-                    almacena como parámetro
-Parámetros de S/:   c1(cadena caracateres)
-***********************************************************************/
-void cadena(char *c1[50]){
-    fflush(stdin);
-
-    //Pide una cadena de caracteres
-    printf("\n\tIntroduce una cadena de caracteres: ");
-    fgets(c1, 50, stdin);
-
-    system("pause");
-    system("cls");
-}
 
 /**********************************************************************
 Subprograma:        crearCadenaInnvertida
@@ -418,13 +460,12 @@ Tarea que realiza:  Recibe una cadena como parámtero, la invierte y
 Parámetros de E/:   c1(cadena caracateres)
 ***********************************************************************/
 void crearCadenaInvertida(char c1[50]) {
-    //Declaramos variables y quitamos el salto de línea a la cadena de caracteres
-    int i, longitud;
-    c1[strcspn(c1, "\n")] = '\0';
-
     printf("--------------------------------------------------------------------------\n");
     printf("\n\t\tInvertir Cadena Caracteres\n");
     printf("\n--------------------------------------------------------------------------\n");
+    //Declaramos variables y quitamos el salto de línea a la cadena de caracteres
+    int i, longitud;
+    c1[strcspn(c1, "\n")] = '\0';
 
     //Solicita la palabra al usuraio y la pasa a mayúsculas
     printf("\n\tCadena original: %s\n", c1);
@@ -444,39 +485,18 @@ void crearCadenaInvertida(char c1[50]) {
 
 
 /**********************************************************************
-Subprograma:        cadenas
-Tarea que realiza:  Solicita al usuario dos cadenas de caracteres y las
-                    almacena como parámetros
-Parámetros de S/:   c1(cadena caracateres) y c2(cadena de caracteres)
-***********************************************************************/
-void cadenas(char *c1[50], char *c2[50]){
-    fflush(stdin);
-
-    //Pide las cadenas de caracteres
-    printf("\n\tIntroduce una cadena de caracteres: ");
-    fgets(c1, 50, stdin);
-
-    printf("\n\tIntroduce otra cadena de caracteres: ");
-    fgets(c2, 50, stdin);
-
-    system("pause");
-    system("cls");
-}
-
-/**********************************************************************
 Subprograma:        convertirCadenas
 Tarea que realiza:  Recibe dos cadenas de caracteres como parámteros y las
                     convierte teniendo en cuenta los caracteres que están
                     en una de ellas pero no en la otra, también muestra
                     los caracteres omitidos.
-Parámetros de S/:   c1(cadena caracateres) y c2(cadena de caracteres)
+Parámetros de E/:   c1(cadena caracateres) y c2(cadena de caracteres)
+Parámetros de S/:   c3 y c4 (cadenas caracteres), o y p (números enteros)
 ***********************************************************************/
-void convertirCadenas(char c1[50], char c2[50]) {
-
-
-    //Declaramos las cadenas resultantes y otras variables
-    char c3[50], c4[50];
-    int o = 0, p = 0; //Para las cantidades de caracteres omitidos
+void convertirCadenas(int *o, int *p, char c1[50], char c2[50], char c3[50], char c4[50]) {
+    *o = 0;
+    *p = 0;
+    //Declaramos otras variables
     int c = 0, d = 0;
 
     //Quita los saltos de línea a las cadenas de caracteres
@@ -485,21 +505,17 @@ void convertirCadenas(char c1[50], char c2[50]) {
 
     //Muestra el título del programa
     printf("--------------------------------------------------------------------------\n");
-    printf("\n\t\tConvertir Cadenas de CAracteres\n");
+    printf("\n\t\tConvertir Cadenas de Caracteres\n");
     printf("\n--------------------------------------------------------------------------\n");
 
-    //Muestra las cadenas originales calcula y muestra los caracteres omitidos
-    printf("\n\tCADENA ORIGINAL\t\t\tCADENA CONVERTIDA\t\tCARACTERES OMITIDOS\n");
 
-    //Muestra la cadena 1, luego la convierte y muestra la cadena convertida y los elementos omitidos
-    printf("\n\tCadena 1: %s\t", c1);
 
     for (int i=0; c1[i]; i++){
         int presente = 0; //Si encuentra un caracter en c2 igual al de c1 cambia su valor
         //si no encuentra ninguno, sirve para añadir a c3 los caracteres
         for (int e=0; c2[e]; e++){
             if (c1[i] == c2[e]){
-                o++;
+                (*o)++;
                 presente = 1;
                 break;
             }
@@ -508,17 +524,14 @@ void convertirCadenas(char c1[50], char c2[50]) {
             c3[c++] = c1[i];
         }
     }
-    printf("\t%s\t\t\t\t%d elementos omitidos\n", c3, o);
 
     //Hace lo mismo con la cadena 2
-    printf("\n\tCadena 2: %s", c2);
-
     for (int i=0; c2[i]; i++){
-        int presente = 0; //Si encuentra un caracter en c2 igual al de c1 cambia su valor
-        //si no encuentra ninguno, sirve para añadir a c3 los caracteres
+        int presente = 0;
+
         for (int e=0; c1[e]; e++){
             if (c2[i] == c1[e]){
-                p++;
+                (*p)++;
                 presente = 1;
                 break;
             }
@@ -527,16 +540,13 @@ void convertirCadenas(char c1[50], char c2[50]) {
             c4[d++] = c2[i];
         }
     }
-    printf("\t%s\t\t\t\t%d elementos omitidos\n\n", c4, p);
-
-    system("pause");
-    system("cls");
 }
 
 //SUBPROGRAMA ARRAYS DE NÚMEROS ENTEROS
 void arrays(){
     //Declaramos los arrays necesarios y los subprogramas
     int tabla1 [5], tabla2[5], tablaSuma[5], opc;
+    void submenuArraysEnteros();
     void sumaArrays(int tabla1[5], int tabla2[5], int tablaSuma[5]);
     void multiplicacionArrays(int tabla1[5], int tabla2[5]);
     void interseccionArrays(int tabla1[5], int tabla2[5]);
@@ -555,14 +565,7 @@ void arrays(){
     system("cls");
 
     do {
-        printf("--------------------------------------------------------------------------\n");
-        printf("\n\t\tPROCESAR ARRAYS DE NÚMEROS ENTEROS\n");
-        printf("\n--------------------------------------------------------------------------\n");
-        printf("\n\t1. Suma\n");
-        printf("\n\t2. Multiplicación\n");
-        printf("\n\t3. Intersección\n");
-        printf("\n\t0. Salir\n");
-
+        submenuArraysEnteros();
 
         do{
             printf("\n\n\tSeleccione una opción: ");
@@ -605,6 +608,20 @@ void arrays(){
 }
 
 //SUBPROGRAMAS PARA PROCESAR ARRAYS
+/**********************************************************************
+Subprograma:        submenuArraysEnteros
+Tarea que realiza:  muestra por pantalla el submenú de la opción 4
+***********************************************************************/
+void submenuArraysEnteros(){
+    printf("--------------------------------------------------------------------------\n");
+    printf("\n\t\tPROCESAR ARRAYS DE NÚMEROS ENTEROS\n");
+    printf("\n--------------------------------------------------------------------------\n");
+    printf("\n\t1. Suma\n");
+    printf("\n\t2. Multiplicación\n");
+    printf("\n\t3. Intersección\n");
+    printf("\n\t0. Salir\n");
+}
+
 /**********************************************************************
 Subprograma:        sumaArrays
 Tarea que realiza:  Recibe dos arrays de números enteros y suma ambos
@@ -694,4 +711,15 @@ void interseccionArrays(int tabla1[5], int tabla2[5]){
 
     system("pause");
     system("cls");
+}
+
+
+/****************************************************
+Subprograma:        mensajeDespedida
+Tarea:              Muestra por pantalla un pequeño mensaje
+                    que da al usuario las gracias por usar
+                    el programa.
+*****************************************************/
+void mensajeDespedida(){
+    printf("\n\tGracias por usar este programa...Pulse <Intro> para continuar...\n");
 }
