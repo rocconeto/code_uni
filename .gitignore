@@ -6,3 +6,4 @@ bin/
 obj/
 main.o
 estadistica.py
+.ipynb_checkpoints/
