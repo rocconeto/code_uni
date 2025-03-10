@@ -8,6 +8,16 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <locale.h>
+#include <string.h>
+
+#define MAX_CLIENTES = 100
+
+typedef struct{
+    int dni;
+    char nombre[50];
+    int tipo;
+    char reservas[7];
+}Clientes
 
 void menu_princ();
 void gest_clientes();
@@ -21,6 +31,24 @@ int main()
     printf("\n--------------------------------------------------------\n\n");
     system("pause");
     system("cls");
+
+    //Cargamos los datos de los ficheros
+    int cont_clientes = 0;
+    FILE *fich;
+    fich = fopen("clientes.dat", "r");
+    if(fich == NULL){
+        printf("Error al abrir el fichero");
+        exit(1);
+    }else{
+        while (fscanf(fich, "%d%s%d%s", &clientes[cont_clientes].dni, &clientes[cont_clientes].nombre, &clientes[cont_clientes].tipo, &clientes[cont_clientes].reservas) == 4){
+            cont_clientes ++;
+            if(cont_clientes >= MAX_CLIENTES){
+                break;
+            }
+        }
+        fclose(clientes);
+    }
+
     menu_princ();
     return 0;
 }
@@ -73,8 +101,24 @@ void menu_princ(){
                 system("cls");
                 break;
             case 0:
-                printf("\n\tGracias por usar nuestro programa\n");
+                printf("\n\tGuardando los datos...\n");
                 printf("\n--------------------------------------------------------\n\n");
+
+                //Guarda los cambios realizados en los registros
+                FILE *fich
+                fich = fopen("clientes.dat", "w");
+                if(fich == NULL){
+                    printf("Error al guardar los clientes.");
+                    return 1;
+                }
+                for(int i=0; i<cont_clientes; i++){
+                    fprintf(fich, "\n\t%d%s%d%s\n", &clientes[i].dni, &clientes[i].nombre, &clientes[i].tipo, &clientes[i].reservas);
+                }
+
+                fclose(fich);
+                printf("\n\tDatos guardados correctamente.\n");
+                printf("¡Gracias por usar nuestro programa!");
+
                 break;
         }
     }while(opc != 0);
