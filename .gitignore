@@ -7,3 +7,4 @@ obj/
 main.o
 estadistica.py
 .ipynb_checkpoints/
+__pycache__/
