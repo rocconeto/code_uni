@@ -9,4 +9,6 @@ estadistica.py
 .ipynb_checkpoints/
 __pycache__/
 *.whl
+myenv/
+
 
