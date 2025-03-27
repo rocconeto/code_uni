@@ -10,14 +10,14 @@
 #include <locale.h>
 #include <string.h>
 
-#define MAX_CLIENTES = 100
+#define MAX_CLIENTES 100
 
 typedef struct{
     int dni;
     char nombre[50];
     int tipo;
     char reservas[7];
-}Clientes
+}Clientes;
 
 void menu_princ();
 void gest_clientes();
@@ -26,6 +26,7 @@ void gest_reservas();
 
 int main()
 {
+    Clientes clientes[MAX_CLIENTES];
     setlocale(LC_ALL, "spanish");
     printf("\n\t¡Bienvenido a la aplicación GEST_HOTEL!\n");
     printf("\n--------------------------------------------------------\n\n");
@@ -61,7 +62,7 @@ int main()
 /*Prerrequisitos:           ---                                                 */
 /*Objetivo:                 Muestra por pantalla el menú principal del programa */
 /********************************************************************************/
-void menu_princ(){
+void menu_princ(Clientes clientes[], int cont_clientes){
     int opc;
     do{
         printf("--------------------------------------------------------\n");
@@ -105,7 +106,7 @@ void menu_princ(){
                 printf("\n--------------------------------------------------------\n\n");
 
                 //Guarda los cambios realizados en los registros
-                FILE *fich
+                FILE *fich;
                 fich = fopen("clientes.dat", "w");
                 if(fich == NULL){
                     printf("Error al guardar los clientes.");
@@ -217,7 +218,137 @@ void gest_hab(){
     void submenu_hab();
 
     submenu_hab();
+    typedef struct {
+        char codigo[10];
+        char tipo[20];
+        float precio;
+        int ocupada;
+    } Habitacion;
 
+    Habitacion habitaciones[MAX_HABITACIONES];
+    int total_habitaciones = 0;
+
+    void alta_habitacion();
+    void baja_habitacion();
+    void modificar_habitacion();
+    void consultar_habitacion();
+    void listar_habitaciones();
+    char *obtener_fecha_actual();
+
+    int main() {
+        int opcion;
+        do {
+            printf("\n--- GESTIÓN DE HABITACIONES ---\n");
+            printf("1. Alta de habitación\n");
+            printf("2. Baja de habitación\n");
+            printf("3. Modificación de habitación\n");
+            printf("4. Consulta de habitación\n");
+            printf("5. Listado general\n");
+            printf("0. Salir\n");
+            printf("Seleccione una opción: ");
+            scanf("%d", &opcion);
+
+            switch (opcion) {
+                case 1: alta_habitacion(); break;
+                case 2: baja_habitacion(); break;
+                case 3: modificar_habitacion(); break;
+                case 4: consultar_habitacion(); break;
+                case 5: listar_habitaciones(); break;
+                case 0: printf("Saliendo...\n"); break;
+                default: printf("Opción inválida.\n");
+            }
+        } while (opcion != 0);
+        return 0;
+    }
+
+    void alta_habitacion() {
+        if (total_habitaciones >= MAX_HABITACIONES) {
+            printf("No hay espacio para nuevas habitaciones.\n");
+            return;
+        }
+        Habitacion nueva;
+        printf("Ingrese el tipo de habitación: ");
+        scanf("%s", nueva.tipo);
+        printf("Ingrese el precio por noche: ");
+        scanf("%f", &nueva.precio);
+        nueva.ocupada = 0;
+        sprintf(nueva.codigo, "HAB_%03d", total_habitaciones + 1);
+        habitaciones[total_habitaciones++] = nueva;
+        printf("Habitación registrada con código: %s\n", nueva.codigo);
+    }
+
+    void baja_habitacion() {
+        char codigo[10];
+        printf("Ingrese el código de la habitación: ");
+        scanf("%s", codigo);
+
+        for (int i = 0; i < total_habitaciones; i++) {
+            if (strcmp(habitaciones[i].codigo, codigo) == 0) {
+                if (habitaciones[i].ocupada) {
+                    printf("ERROR: No se puede dar de baja la habitación %s ya que está ocupada.\n", codigo);
+                    return;
+                }
+                FILE *f = fopen("bajaHCoHabitaciones.txt", "a");
+                fprintf(f, "%s-%s-%s\n", habitaciones[i].codigo, habitaciones[i].tipo, obtener_fecha_actual());
+                fclose(f);
+                habitaciones[i] = habitaciones[--total_habitaciones];
+                printf("Habitación %s dada de baja.\n", codigo);
+                return;
+            }
+        }
+        printf("ERROR: La habitación no figura en nuestro registro de datos.\n");
+    }
+
+    void modificar_habitacion() {
+        char codigo[10];
+        printf("Ingrese el código de la habitación: ");
+        scanf("%s", codigo);
+        for (int i = 0; i < total_habitaciones; i++) {
+            if (strcmp(habitaciones[i].codigo, codigo) == 0) {
+                printf("Ingrese el nuevo tipo: ");
+                scanf("%s", habitaciones[i].tipo);
+                printf("Ingrese el nuevo precio: ");
+                scanf("%f", &habitaciones[i].precio);
+                printf("Habitación modificada correctamente.\n");
+                return;
+            }
+        }
+        printf("ERROR: La habitación no figura en nuestro registro de datos.\n");
+    }
+
+    void consultar_habitacion() {
+        char codigo[10];
+        printf("Ingrese el código de la habitación: ");
+        scanf("%s", codigo);
+        for (int i = 0; i < total_habitaciones; i++) {
+            if (strcmp(habitaciones[i].codigo, codigo) == 0) {
+                printf("Código: %s\nTipo: %s\nPrecio/Noche: %.2f€\nEstado: %s\n",
+                    habitaciones[i].codigo, habitaciones[i].tipo, habitaciones[i].precio,
+                    habitaciones[i].ocupada ? "Ocupada" : "Libre");
+                return;
+            }
+        }
+        printf("ERROR: La habitación no figura en nuestro registro de datos.\n");
+    }
+
+    void listar_habitaciones() {
+        printf("\nLISTADO GENERAL DE HABITACIONES\n");
+        printf("----------------------------------------------------------\n");
+        printf("Código\tTipo\t	Precio/Noche (€)\n");
+        printf("----------------------------------------------------------\n");
+        for (int i = 0; i < total_habitaciones; i++) {
+            printf("%s\t%s\t%.2f\n", habitaciones[i].codigo, habitaciones[i].tipo, habitaciones[i].precio);
+        }
+        printf("TOTAL: %d habitaciones registradas.\n", total_habitaciones);
+    }
+
+    char *obtener_fecha_actual() {
+        static char fecha[11];
+        time_t t = time(NULL);
+        struct tm tm = *localtime(&t);
+        sprintf(fecha, "%02d/%02d/%04d", tm.tm_mday, tm.tm_mon + 1, tm.tm_year + 1900);
+        return fecha;
+}
     system("cls");
 }
 
