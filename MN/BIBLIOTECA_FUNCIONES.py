@@ -1,12 +1,13 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Thu Feb 20 13:41:12 2025
-
-"""
 import math as mt
+from sympy import *
+import numpy as np
+from numpy import linalg as LA
+
+x = symbols("x")
+
 def raices_segundo_grado(a, b, c):
     """calcula las raices de una ecuación de segundo grado siendo a y b los coeficientes de x y c el termino independiente"""
-    d = (b**2) - 4*a*c  #Calcula el discriminante(el interior de la raiz cuadrada)
+    d = (b**2) - 4*a*c  #Calcula el discriminante
     sol = []
     if a == 0 and b == 0:
         print("No se trata de una ecución.", sol)
@@ -44,8 +45,6 @@ def raices_segundo_grado(a, b, c):
         print("Las soluciones de la ecuación son: ", sol)
 
 
-from sympy import *
-x = symbols("x")
 def taylor(f, x0, n):
     """Polinomio de Taylor. f es la función, x0 es el número entorno al cual trabajas, n es el orden al que quieres llegar"""
     #aqui ya yo
@@ -66,8 +65,6 @@ def taylor(f, x0, n):
         polinomio += i
     return polinomio
 
-from sympy import *
-x = symbols("x")
 def Lagrange(f, P, nd):
     """Dados una función (f), un punto (P) y una lista de nodos (nd), la función calcula la lista de polinomios li, 
     después usa esto para calcular el polinomio interpolador en forma de Lagrange y, para terminar, 
@@ -114,10 +111,6 @@ def Lagrange(f, P, nd):
     return r
 
 
-import numpy as np
-import sympy as sp
-from sympy import *
-x = symbols("x")
 def Newton(z, nds, img):
     """Esta función elabora el polinomio interpolador en forma de Newton dadas una lista con los nodos (nds) y otra con los valores (img). 
     Después, halla el valor aproximado de la función en el punto dado(z)"""
@@ -150,7 +143,7 @@ def Newton(z, nds, img):
     #Elabora el polinomio
     for i in range(len(M)):
         Polinomio += (M[i]*tdd[0, i+2]) #De la tabla de diferencias divididas me interesa la primera fila y todas las columnas menos la primera
-    Polinomio_exp = sp.expand(Polinomio)
+    Polinomio_exp = expand(Polinomio)
     print("Polinomio = ") 
     print(Polinomio)
     print("\nPolinomio expresión general = ")
@@ -159,10 +152,6 @@ def Newton(z, nds, img):
     return newton
 
 
-from sympy import *
-import numpy as np
-import sympy as sp
-x = symbols("x")
 def Hermite(p, nds, f, df):
     """Dadas las listas que contienen los nodos y los valores de la función y su derivada en esos puntos, 
     la función elabora la tabla de diferencias divididas y el polinomio interpolador de Hermite, mostrando ambos por pantalla. 
@@ -219,16 +208,13 @@ def Hermite(p, nds, f, df):
         H += Y2[i-1] * tddH[0, i+1]
     
     #Lo pasamos a forma general y sustituimos en el punto
-    Herm = sp.expand(H)
+    Herm = expand(H)
     print("Polinomio expresión general: ")
     print(Herm)
     h = Herm.subs(x, p)
     return h
 
-import numpy as np
-from numpy import linalg as LA
-import sympy as sp
-x = sp.symbols("x") 
+
 def derivadas(h, x0, n, f): 
     """h es la distancia, x0 el punto, f la función y n la lista que contiene cuántas veces se quiere derivar, con un máximo de 3
     Muestra el valor desde la primera hasta la tercera derivada de la función en un punto."""
@@ -275,7 +261,7 @@ def derivadas(h, x0, n, f):
                     F = F + alphas[i] * f(nds[i]) 
                 print("Tercera derivada es: ", F)
                 
-import numpy as np
+
 def der_nodos(nds, f, x0):
     """Dados los nodos y sus valores, aproxima la derivada en el punto dado, x0. 
     Esta aproximación será realizada con las fórmulas de dos y tres puntos siempre que sea posible su uso"""
@@ -285,41 +271,42 @@ def der_nodos(nds, f, x0):
     #Busco el índice de x0 en la lista de los nodos
     idx = nds.index(x0)
     
-    #Elaboro la primera derivada
+    #Se elabora la primera derivada
     print("Primera derivada -> f'( ", x0, ")")
     if idx >= 1: #Comprueba que hay, al menos, un nodo inferior para calcular en 2-puntos regresiva
         d_2p_regr = (f[idx] - f[idx - 1]) / h
         print("2-puntos regresiva = ", d_2p_regr)
+
     if idx < len(nds) - 1: #Comprueba que hay, al menos, un nodo superior
         d_2p_progr = (f[idx + 1] - f[idx]) / h
         print("2-puntos progresiva = ", d_2p_progr)
-    if 0 < idx < len(nds) - 1: #Compruebo que hay, al menos, un nodo superior y otro inferior
+
+    if 0 < idx < len(nds) - 1: #Comprueba que hay, al menos, un nodo superior y otro inferior
         d_3p_c = (f[idx + 1] - f[idx - 1]) / (2*h)
         print("3-puntos central = ", d_3p_c)
-    if idx < len(nds) - 2: #Compruebo que hay, al menos, 2 nodos superiores
+
+    if idx < len(nds) - 2: #Comprueba que hay, al menos, 2 nodos superiores
         d_3p_progr = (4*f[idx + 1] - f[idx + 2] - 3*f[idx]) / (2*h)
         print("3-puntos progresiva = ", d_3p_progr)
-    if 1 < idx: #Compruebo que hay, al menos, 2 nodos inferiores
+
+    if 1 < idx: #Comprueba que hay, al menos, 2 nodos inferiores
         d_3p_regr = (4*f[idx - 1] - f[idx - 2] - 3*f[idx]) / (2*h)
         print("3-puntos regresiva = ", d_3p_regr)
-    if 1 < idx < len(nds) - 2: #Compureba que hay, al menos, dos nodos superiores e inferiores
+
+    if 1 < idx < len(nds) - 2: #Comprueba que hay, al menos, dos nodos superiores e inferiores
         d_5p_c = (-f[idx + 2] + 8*f[idx + 1] - 8*f[idx-1] + f[idx-2]) / (12*h)
         print("5-puntos central = ", d_5p_c)
     
-    #Elaboro la segunda derivada
+    #Se elabora la segunda derivada
     print("Segunda derivada -> f''( ", x0, ")")
-    if 0 < idx < len(nds) - 1: #Compruebo que hay, al menos, un nodo superior y otro inferior
+    if 0 < idx < len(nds) - 1: #Comprueba que hay, al menos, un nodo superior y otro inferior
         d2_3p_c = (f[idx + 1] - 2*f[idx] + f[idx - 1]) / (h**2)
         print("3-puntos central = ", d2_3p_c)
     if 1 < idx < len(nds) - 2:
         d2_5p_c = (-f[idx + 2] + 16*f[idx + 1] - 30*f[idx] + 16*f[idx-1] - f[idx-2]) / (12*h**2)
         print("5-puntos central = ", d2_5p_c)
 
-import math as mt
-import numpy as np
-from numpy import linalg as LA
-import sympy as sp
-x = sp.symbols("x") 
+
 def integrales(f, a, b): 
     """Se usa para fórmulas de cuadratura y derivación numéricas meidante el método de coeficientes indeterminados.
     #h es la distancia, x0 el punto, f la función y n la lista que contiene cuántas veces se quiere derivar, en nuestro caso 3"""
@@ -333,12 +320,12 @@ def integrales(f, a, b):
     for j in range(n): #columnas
         for i in range(n): #filas
             X[i, j] = nds[j] ** i #eleva el punto xj al índice i
-            p[i] = sp.integrate(x**i, (x, a, b))
+            p[i] = integrate(x**i, (x, a, b))
     M = np.asmatrix(X) #convierte a matriz
     
     #Resuelve el sistema de ecuaciones y, para evitar errores, pasa la función a función numérica.También aproxima la integral
     alphas = LA.solve(M, p)
-    f_num = sp.lambdify('x', f, "numpy")
+    f_num = lambdify('x', f, "numpy")
     int_aprox = 0
     for i in range(n):
         int_aprox += alphas[i] * f_num(nds[i])
@@ -347,10 +334,7 @@ def integrales(f, a, b):
     print("tres_octavos( ", f, ",", a, ",", b, "). Sol = ", int_aprox)
     return int_aprox
 
-import math as mt
-import numpy as np
-import sympy as sp
-x = sp.symbols("x")
+
 def cuadr_comp(f, a, b, n):
     """Dados la función, los extremos del intervalo y la cantidad n de subintervalos
     calcula la integral de la función por las fórmulas de cuadratura compuesta."""
@@ -358,11 +342,11 @@ def cuadr_comp(f, a, b, n):
     h = (b - a) / (n - 1)
     
     #Comparamos con el valor exacto que se calcula con la librería sympy
-    F = sp.integrate(f, x) 
+    F = integrate(f, x) 
     integr = (F.subs(x, b) - F.subs(x, a)).evalf()
     
     #Para evitar problemas entre sympy y numpy, elaboramos la función en términos de numpy
-    f = sp.lambdify(x, f, 'numpy')
+    f = lambdify(x, f, 'numpy')
     
     #Rectángulo
     suma = 0
