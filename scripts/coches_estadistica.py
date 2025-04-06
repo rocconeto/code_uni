@@ -8,7 +8,8 @@ while True:
 
     print(coches)
 
-    if coches_juntos = "x"
+    if coches_juntos = "x":
+        
 
 for i in coches:
     if len(i) < 3:
