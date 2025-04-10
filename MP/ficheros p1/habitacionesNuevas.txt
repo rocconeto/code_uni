@@ -1,0 +1,5 @@
+Individual#50,25
+Suite#230
+Doble#91,99
+Individual#64,50
+Suite#169,78

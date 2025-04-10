@@ -1,0 +1,2 @@
+Si ejecutas algo para terminar la ejecución cierra desde la X de arriba a la derecha, porque si has probado cosas y tal,
+se cambian los ficheros al darle a la opción 0 del menú principal. Si eso pasa dejo los ficheros en otra carpeta aparte.
