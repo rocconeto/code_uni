@@ -1,0 +1,9 @@
+1 y 2 - Simplemente seguir los pasos y comprobar que los valores de p son válidos como dice el enunciado.
+3 - Escogemos la opcion 1. a) Mira el statreporter (Análisis de una variable) b) Lo hemos ajustado al modelo de la normal pero el valor
+de p nos indica que no es valido. Así que aplicamos una transformación logarítmica. Ahora el valor de p es válido en todas las pruebas 
+menos en la chi-cuadrado, pero como su valor depende del número de clases, esta prueba varía mucho. (Según chatGPT). c) En Ajuste de 
+distribuciones - Log(Dinero), en la parte que pone media y desv. típica estimadas. d)Como para el modelo hemos tomado logaritmos, tambien
+hay que tomarlo de 1500, una vez hecho eso, calculamos la probabilidad de que sea mayor (x si acaso es 0,2327...)
+4 - Usando nuestros datos, los ajustamos a una distribucion, no sirve la normal, transformacion logaritmica y ajustamos al modelo 
+lognormal (p = 0,13)
+5 - Copiamos todo lo anterior al statreporter y lo guardamos en formato .rtf
