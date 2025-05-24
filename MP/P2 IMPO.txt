@@ -1,0 +1,6 @@
+Para las opciones 5 y 6 del menú tienes que ejecutar una vez con cada una, porque como hacen lo mismo pero de distinta forma para que se 
+vea lo que hacen.
+Para la opción 7 puedes o cambiar las cadenas V1 y V2 poniendolas en minusculas todas las letras o ejecutar antes la opción 5 o 6. Sino
+haces esto, ordena mayusculas y despues minusculas.
+El resto funcionan bien con letras en mayusculas y minusculas, aunque en las capturas del pdf salen todo en minusculas, así que si quieres
+cambiar las cadenas como te he dicho antes y dejarlo así, como quieras.
