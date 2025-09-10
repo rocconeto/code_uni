@@ -1,8 +1,0 @@
-# depslib dependency file v1.0
-1733081869 source:c:\users\miguel raúl y david\desktop\code_uni\fp\fp3\fp_p3_g40\main.c
-	<stdio.h>
-	<stdlib.h>
-	<string.h>
-	<locale.h>
-	<ctype.h>
-
