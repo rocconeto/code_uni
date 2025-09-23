@@ -1,0 +1,5 @@
+Relación "PRECEDER": (1, N) porque una asignatura puede preceder a varias.
+		(1, N) porque una asigntarua puede tener varias precedentes.
+
+Relación "SEGUIR": (0, N) porque no tiene por qué seguir a nadie y le pueden seguir muchos.
+		(0, N) porque no tiene por qué tener seguidos y seguir a muchos.
