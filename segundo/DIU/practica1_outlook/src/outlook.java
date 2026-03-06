@@ -3,38 +3,72 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 
 public class outlook extends JFrame {
-    public outlook () {
+    public outlook() {
         setTitle("GUI Outlook");
-        setLayout(new BorderLayout(16, 16)); //Los números indican la separación entre las partes norte, sur...
+        setSize(280, 570);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(280,570);
         setLocationRelativeTo(null);
 
-        //Barra superior
-        JPanel header = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
+        //JPanel principal
+        JPanel principal = new JPanel(new BorderLayout(16, 16));
+        this.add(principal);
+
+        //Header
+        JPanel header = new JPanel(new GridBagLayout());
         header.setPreferredSize(new Dimension(0, 20));
-        header.add(createPanel(Color.GREEN, 25, 20));
-        header.add(createPanel(Color.RED, 190, 20));
-        header.add(createPanel(Color.GREEN, 25, 20));
-        header.add(createPanel(Color.BLUE, 25, 20));
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.fill = GridBagConstraints.BOTH;
+        gbc.weighty = 1.0;
 
-        // Contenido central
-        JPanel center = new JPanel();
+        gbc.weightx = 0.1; header.add(createPanel(Color.GREEN), gbc);
+        gbc.weightx = 0.7; header.add(createPanel(Color.RED), gbc);
+        gbc.weightx = 0.1; header.add(createPanel(Color.GREEN), gbc);
+        gbc.weightx = 0.1; header.add(createPanel(Color.BLUE), gbc);
+        principal.add(header, BorderLayout.NORTH);
 
-        // Pie de página
-        JPanel footer = new JPanel();
-        footer.setBackground(Color.DARK_GRAY);
-        footer.setPreferredSize(new Dimension(0, 30));
-        add(header, BorderLayout.NORTH);
-        add(center, BorderLayout.CENTER);
-        add(footer, BorderLayout.SOUTH);
+        //Center
+        JPanel center = new JPanel(new GridLayout(0, 1, 0, 8));
+        for(int i = 0; i < 6; i++) {
+            center.add(crearBloqueCorreo());
+        }
+
+        principal.add(center, BorderLayout.CENTER);
+
+        //Footer
+        JPanel footer = new JPanel(new GridLayout(1, 4, 16, 0));
+        footer.setPreferredSize(new Dimension(0, 60));
+
+        footer.add(createPanel(Color.RED));
+        footer.add(createPanel(Color.GREEN));
+        footer.add(createPanel(Color.BLUE));
+        footer.add(createPanel(Color.YELLOW));
+
+        principal.add(footer, BorderLayout.SOUTH);
         setVisible(true);
     }
 
-    private JPanel createPanel(Color color, int w, int h) {
+    private JPanel createPanel(Color color) {
         JPanel p = new JPanel();
         p.setBackground(color);
-        p.setPreferredSize(new Dimension(w, h));
+        return p;
+    }
+
+    private JPanel crearBloqueCorreo() {
+        JPanel p = new JPanel(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.fill = GridBagConstraints.BOTH;
+        gbc.weighty = 1.0;
+
+        gbc.weightx = 0.2; p.add(createPanel(Color.DARK_GRAY), gbc);
+        gbc.weightx = 0.8; p.add(bloques(), gbc);
+        return p;
+    }
+
+    private JPanel bloques() {
+        JPanel p = new JPanel(new GridLayout(3, 1));
+        p.add(createPanel(Color.BLACK));
+        p.add(createPanel(Color.LIGHT_GRAY));
+        p.add(createPanel(Color.PINK));
         return p;
     }
 
