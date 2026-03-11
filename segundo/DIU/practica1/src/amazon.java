@@ -1,58 +1,61 @@
+import java.awt.*;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-import java.awt.*;
 
-public class EjercicioAmazon extends JFrame {
+public class amazon extends JFrame {
 
-    public EjercicioAmazon() {
-        // ventana 280x570
+    public amazon() {
         setTitle("Ej. Lab 1");
         setSize(280, 570);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 
-        // Panel principal
         JPanel mainPanel = new JPanel(new BorderLayout(0, 8));
         mainPanel.setBorder(new EmptyBorder(16, 16, 16, 16));
         mainPanel.setBackground(Color.WHITE);
 
-        // Header
+        // Header (verde y rojo)
         JPanel header = new JPanel(new GridBagLayout());
         header.setPreferredSize(new Dimension(280, 60));
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.fill = GridBagConstraints.BOTH;
         gbc.weighty = 1.0;
 
-        // Panel verde
         gbc.weightx = 0.2;
-        JPanel greenPanel = createPanel(Color.GREEN); // Verde bosque
-        greenPanel.add(createCenteredLabel("Logo", Color.WHITE));
+        JPanel greenPanel = createPanel(Color.GREEN);
+        greenPanel.setLayout(new BorderLayout());
+        JLabel logo = new JLabel("Logo", SwingConstants.CENTER);
+        logo.setForeground(Color.WHITE);
+        greenPanel.add(logo);
         header.add(greenPanel, gbc);
 
-        // Panel rojo
         gbc.weightx = 0.8;
         header.add(createPanel(Color.RED), gbc);
 
-        // Centro
+        // Cuerpo central
         JPanel body = new JPanel(new GridLayout(1, 2, 8, 0));
         body.setOpaque(false);
 
-        // Columna izquierda
         JPanel leftCol = new JPanel(new GridLayout(2, 1, 0, 8));
         leftCol.setOpaque(false);
-
-        // Cuadro negro con label
-        JPanel blackPanel = createPanel(Color.BLACK);
-        blackPanel.add(createCenteredLabel("Producto", Color.WHITE));
-        leftCol.add(blackPanel);
+        JPanel pNegro = createPanel(Color.BLACK);
+        pNegro.setLayout(new BorderLayout());
+        JLabel lProd = new JLabel("Producto", SwingConstants.CENTER);
+        lProd.setForeground(Color.WHITE);
+        pNegro.add(lProd);
+        leftCol.add(pNegro);
         leftCol.add(createPanel(Color.BLACK));
 
-        // Columna derecha
         JPanel rightCol = new JPanel(new GridLayout(6, 1, 0, 8));
         rightCol.setOpaque(false);
         for (int i = 0; i < 6; i++) {
             JPanel p = createPanel(Color.GRAY);
-            if(i == 0) p.add(crearLabel("Info", Color.WHITE));
+            if (i == 0) {
+                p.setLayout(new BorderLayout());
+                JLabel info = new JLabel("info", SwingConstants.CENTER);
+                info.setForeground(Color.WHITE);
+                p.add(info);
+            }
             rightCol.add(p);
         }
 
@@ -63,18 +66,18 @@ public class EjercicioAmazon extends JFrame {
         JPanel footer = new JPanel(new GridLayout(1, 4, 8, 0));
         footer.setPreferredSize(new Dimension(280, 60));
         footer.setOpaque(false);
-
         footer.add(createPanel(Color.RED));
         footer.add(createPanel(Color.GREEN));
 
-        // Panel azul
-        JPanel bluePanel = createPanel(Color.BLUE);
-        bluePanel.add(crearLabel("Carrito"));
-        footer.add(bluePanel);
+        JPanel pAzul = createPanel(Color.BLUE);
+        pAzul.setLayout(new BorderLayout());
+        JLabel lCar = new JLabel("Carrito", SwingConstants.CENTER);
+        lCar.setForeground(Color.WHITE);
+        pAzul.add(lCar);
+        footer.add(pAzul);
 
         footer.add(createPanel(Color.YELLOW));
 
-        // Ensamblaje final
         mainPanel.add(header, BorderLayout.NORTH);
         mainPanel.add(body, BorderLayout.CENTER);
         mainPanel.add(footer, BorderLayout.SOUTH);
@@ -83,19 +86,13 @@ public class EjercicioAmazon extends JFrame {
         setVisible(true);
     }
 
-    // Método auxiliar para crear penels
-    private JPanel crearPanel(Color color) {
-        JPanel p = new JPanel(new BorderLayout());
+    private JPanel createPanel(Color color) {
+        JPanel p = new JPanel();
         p.setBackground(color);
         return p;
     }
 
-    // Método para crear labels
-    private JLabel crearLabel(String text) {
-        return new = JLabel(text, SwingConstants.CENTER);
-    }
-
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(EjercicioAmazon::new);
+        SwingUtilities.invokeLater(amazon::new);
     }
 }

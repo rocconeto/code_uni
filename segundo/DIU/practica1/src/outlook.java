@@ -21,7 +21,7 @@ public class outlook extends JFrame {
         gbc.weighty = 1.0;
 
         gbc.weightx = 0.1; header.add(createPanel(Color.GREEN), gbc);
-        
+
         //Panel rojo del header con etiqueta
         JPanel headerRed = createPanel(Color.RED);
         headerRed.add(new JLabel("Header"));
