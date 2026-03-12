@@ -1,6 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
 
+//Daniel Atanasov Angelov y Raul Sanz Tomé
 public class Keler extends JFrame {
     public Keler() {
         setTitle("Lab 2. Ej");
