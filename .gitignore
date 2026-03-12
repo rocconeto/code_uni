@@ -11,4 +11,4 @@ __pycache__/
 *.whl
 myenv/
 .venv/
-
+.idea/
