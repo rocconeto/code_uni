@@ -31,6 +31,6 @@ public class Viaje {
 
     @Override
     public String toString() {
-        return "Viaje " + codigo + ": " + origen + " -> " + destino + " (" + hora + ")";
+        return String.format("Viaje %d: %s -> %s (%s)", codigo, origen, destino, hora);
     }
 }

@@ -5,7 +5,7 @@ public class Autobus {
     private String matricula;
     private int anioCompra;
     private int plazas;
-    public LEG<Viaje> viajes; // Sublista de la multilista
+    public LEG<Viaje> viajes;
 
     public Autobus(String matricula, int anioCompra, int plazas) {
         this.matricula = matricula;
@@ -17,7 +17,6 @@ public class Autobus {
     public String getMatricula() { return matricula; }
     public int getAnioCompra() { return anioCompra; }
     public int getPlazas() { return plazas; }
-
     public void setAnioCompra(int anioCompra) { this.anioCompra = anioCompra; }
     public void setPlazas(int plazas) { this.plazas = plazas; }
 
