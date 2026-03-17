@@ -7,6 +7,14 @@ public class Viaje {
     private String hora;
 
     public Viaje(int codigo, String origen, String destino, String hora) {
+        // Validaciones defensivas
+        if (origen == null || destino == null || origen.trim().isEmpty() || destino.trim().isEmpty()) {
+            throw new IllegalArgumentException("Las ciudades no pueden estar vacías.");
+        }
+        if (origen.equalsIgnoreCase(destino)) {
+            throw new IllegalArgumentException("Las ciudades de origen y destino deben ser distintas.");
+        }
+
         this.codigo = codigo;
         this.origen = origen;
         this.destino = destino;
