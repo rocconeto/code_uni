@@ -303,8 +303,8 @@ public class GestionBus {
                 while (a3 != null) {
                     System.out.println("Autobús: " + a3.dato.getMatricula());
                     NodoLEG<Viaje> v3 = a3.dato.getViajes().primero; // CAMBIO AQUÍ
-                    if(v3 == null) System.out.println("  Sin viajes asignados.");
-                    while(v3 != null) {
+                    if (v3 == null) System.out.println("  Sin viajes asignados.");
+                    while (v3 != null) {
                         System.out.println("  - " + v3.dato);
                         v3 = v3.sig;
                     }
@@ -318,7 +318,7 @@ public class GestionBus {
                 NodoLEG<Autobus> a4 = empresa.primero;
                 while (a4 != null) {
                     NodoLEG<Viaje> v4 = a4.dato.getViajes().primero; // CAMBIO AQUÍ
-                    while(v4 != null) {
+                    while (v4 != null) {
                         if (v4.dato.getOrigen().equalsIgnoreCase(origen)) {
                             System.out.println("Bus: " + a4.dato.getMatricula() + " | " + v4.dato);
                         }
@@ -326,3 +326,6 @@ public class GestionBus {
                     }
                     a4 = a4.sig;
                 }
+        }
+    }
+}
