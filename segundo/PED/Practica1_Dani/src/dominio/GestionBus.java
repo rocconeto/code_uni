@@ -326,3 +326,148 @@ public class GestionBus {
                     }
                     a4 = a4.sig;
                 }
+                break;
+            case 5:
+                System.out.print("Introduzca ciudad de llegada: ");
+                String destino = sc.nextLine();
+                System.out.println("\nVIAJES QUE LLEGAN A " + destino.toUpperCase());
+                NodoLEG<Autobus> a5 = empresa.primero;
+                while (a5 != null) {
+                    NodoLEG<Viaje> v5 = a5.dato.getViajes().primero; // CAMBIO AQUÍ
+                    while(v5 != null) {
+                        if (v5.dato.getDestino().equalsIgnoreCase(destino)) {
+                            System.out.println("Bus: " + a5.dato.getMatricula() + " | " + v5.dato);
+                        }
+                        v5 = v5.sig;
+                    }
+                    a5 = a5.sig;
+                }
+                break;
+            case 6:
+                System.out.print("Introduzca capacidad mínima: ");
+                int cap = Integer.parseInt(sc.nextLine());
+                System.out.println("\nAUTOBUSES CON " + cap + " O MÁS PLAZAS");
+                NodoLEG<Autobus> a6 = empresa.primero;
+                while (a6 != null) {
+                    if (a6.dato.getPlazas() >= cap) {
+                        System.out.println("Matrícula: " + a6.dato.getMatricula() + " | Plazas: " + a6.dato.getPlazas());
+                    }
+                    a6 = a6.sig;
+                }
+                break;
+            case 7:
+                System.out.println("\nAUTOBUSES CON MAYOR CANTIDAD DE VIAJES");
+                int max = -1;
+                NodoLEG<Autobus> a7 = empresa.primero;
+                while (a7 != null) {
+                    if (a7.dato.getViajes().talla() > max) max = a7.dato.getViajes().talla(); // CAMBIO AQUÍ
+                    a7 = a7.sig;
+                }
+                if (max > 0) {
+                    a7 = empresa.primero;
+                    while (a7 != null) {
+                        if (a7.dato.getViajes().talla() == max) { // CAMBIO AQUÍ
+                            System.out.println("Matrícula: " + a7.dato.getMatricula() + " | Viajes: " + max);
+                        }
+                        a7 = a7.sig;
+                    }
+                } else {
+                    System.out.println("Ningún autobús tiene viajes.");
+                }
+                break;
+            case 8:
+                int totalViajes = 0;
+                NodoLEG<Autobus> a8 = empresa.primero;
+                while (a8 != null) {
+                    totalViajes += a8.dato.getViajes().talla(); // CAMBIO AQUÍ
+                    a8 = a8.sig;
+                }
+                System.out.println("\nCANTIDAD TOTAL DE VIAJES DE LA EMPRESA: " + totalViajes);
+                break;
+            case 9:
+                System.out.print("Ciudad origen: "); String ori = sc.nextLine();
+                System.out.print("Ciudad destino: "); String des = sc.nextLine();
+                int totalPasajeros = 0;
+                NodoLEG<Autobus> a9 = empresa.primero;
+                while (a9 != null) {
+                    NodoLEG<Viaje> v9 = a9.dato.getViajes().primero; // CAMBIO AQUÍ
+                    while(v9 != null) {
+                        if (v9.dato.getOrigen().equalsIgnoreCase(ori) && v9.dato.getDestino().equalsIgnoreCase(des)) {
+                            totalPasajeros += a9.dato.getPlazas();
+                        }
+                        v9 = v9.sig;
+                    }
+                    a9 = a9.sig;
+                }
+                System.out.println("\nTOTAL PASAJEROS ESTIMADOS ENTRE " + ori.toUpperCase() + " Y " + des.toUpperCase() + ": " + totalPasajeros);
+                break;
+        }
+    }
+
+    // ==========================================
+    // MÉTODOS AUXILIARES Y DE VALIDACIÓN
+    // ==========================================
+
+    private static void insertarAutobusOrdenadoPorPlazas(Autobus nuevo) {
+        if (empresa.esVacia()) {
+            empresa.insertar(nuevo);
+            return;
+        }
+
+        NodoLEG<Autobus> aux = empresa.primero;
+        while (aux != null && aux.dato.getPlazas() < nuevo.getPlazas()) {
+            aux = aux.sig;
+        }
+
+        NodoLEG<Autobus> nodoNuevo = new NodoLEG<>(nuevo);
+        if (aux == empresa.primero) {
+            nodoNuevo.sig = empresa.primero;
+            empresa.primero.ant = nodoNuevo;
+            empresa.primero = nodoNuevo;
+        } else if (aux == null) {
+            nodoNuevo.ant = empresa.ultimo;
+            empresa.ultimo.sig = nodoNuevo;
+            empresa.ultimo = nodoNuevo;
+        } else {
+            nodoNuevo.sig = aux;
+            nodoNuevo.ant = aux.ant;
+            aux.ant.sig = nodoNuevo;
+            aux.ant = nodoNuevo;
+        }
+    }
+
+    private static boolean existeCodigoViajeGlobal(int codigo) {
+        NodoLEG<Autobus> auxBus = empresa.primero;
+        while (auxBus != null) {
+            if (auxBus.dato.getViajes().buscar(new Viaje(codigo, "a", "b", "")) != null) { // CAMBIO AQUÍ
+                return true;
+            }
+            auxBus = auxBus.sig;
+        }
+        return false;
+    }
+
+    private static boolean ciudadesValidas(String origen, String destino) {
+        if (origen.equalsIgnoreCase(destino)) return false;
+        String[] permitidas = {"Madrid", "Segovia", "Barcelona", "Sevilla"};
+        boolean oriValido = false, desValido = false;
+        for (String c : permitidas) {
+            if (c.equalsIgnoreCase(origen)) oriValido = true;
+            if (c.equalsIgnoreCase(destino)) desValido = true;
+        }
+        return oriValido && desValido;
+    }
+
+    private static boolean conflictoViajeEnBus(Autobus bus, String origen, String destino, String hora) {
+        NodoLEG<Viaje> aux = bus.getViajes().primero; // CAMBIO AQUÍ
+        while (aux != null) {
+            if (aux.dato.getOrigen().equalsIgnoreCase(origen) &&
+                    aux.dato.getDestino().equalsIgnoreCase(destino) &&
+                    aux.dato.getHora().equalsIgnoreCase(hora)) {
+                return true;
+            }
+            aux = aux.sig;
+        }
+        return false;
+    }
+}
