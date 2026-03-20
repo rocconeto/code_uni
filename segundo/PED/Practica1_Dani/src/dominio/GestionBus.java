@@ -26,8 +26,8 @@ public class GestionBus {
                 if (op == 1) altaAutobus();
                 else if (op == 2) bajaAutobus();
                 else if (op == 3) modificarAutobus();
-                else if (op == 4) registrarViaje();
-                else if (op == 5) borrarViaje();
+                else if (op == 4) altaViaje();
+                else if (op == 5) bajaViaje();
                 else if (op == 6) modificarViaje();
             } catch (Exception e) {
                 System.out.println("Error: Introduzca un número válido.");
@@ -165,7 +165,7 @@ public class GestionBus {
         } while (resp.equalsIgnoreCase("S"));
     }
 
-    private static void registrarViaje() {
+    private static void altaViaje() {
         String resp;
         do {
             System.out.print("Matrícula del autobús que realizará el viaje: ");
@@ -207,7 +207,7 @@ public class GestionBus {
         } while (resp.equalsIgnoreCase("S"));
     }
 
-    private static void borrarViaje() {
+    private static void bajaViaje() {
         System.out.print("Matrícula del autobús: ");
         String mat = sc.nextLine();
         Autobus bus = empresa.buscar(new Autobus(mat, 1, 1));
