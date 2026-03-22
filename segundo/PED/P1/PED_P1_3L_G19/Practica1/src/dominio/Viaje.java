@@ -1,0 +1,44 @@
+package dominio;
+
+public class Viaje {
+    private int codigo;
+    private String origen;
+    private String destino;
+    private String hora;
+
+    public Viaje(int codigo, String origen, String destino, String hora) {
+        // Validaciones defensivas
+        if (origen == null || destino == null || origen.trim().isEmpty() || destino.trim().isEmpty()) {
+            throw new IllegalArgumentException("Las ciudades no pueden estar vacías.");
+        }
+        if (origen.equalsIgnoreCase(destino)) {
+            throw new IllegalArgumentException("Las ciudades de origen y destino deben ser distintas.");
+        }
+
+        this.codigo = codigo;
+        this.origen = origen;
+        this.destino = destino;
+        this.hora = hora;
+    }
+
+    public int getCodigo() { return codigo; }
+    public String getOrigen() { return origen; }
+    public String getDestino() { return destino; }
+    public String getHora() { return hora; }
+
+    public void setOrigen(String origen) { this.origen = origen; }
+    public void setDestino(String destino) { this.destino = destino; }
+    public void setHora(String hora) { this.hora = hora; }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (!(obj instanceof Viaje)) return false;
+        return this.codigo == ((Viaje) obj).codigo;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("Viaje %d: %s -> %s (%s)", codigo, origen, destino, hora);
+    }
+}
