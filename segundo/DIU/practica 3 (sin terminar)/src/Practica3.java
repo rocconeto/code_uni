@@ -1,11 +1,13 @@
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import java.util.Random;
 
 public class Practica3 extends JFrame {
-    private static final int CANVAS_WIDTH = 400;
-    private static final int CANVAS_HEIGHT = 400;
+    // Proporciones para forma de rectángulo tumbado
+    private static final int CANVAS_WIDTH = 550;
+    private static final int CANVAS_HEIGHT = 300;
     private JPanel panelIzquierdo;
     private DrawCanvas canvas;
 
@@ -18,31 +20,36 @@ public class Practica3 extends JFrame {
     private int hX2 = CANVAS_WIDTH - 20, hY2 = hY1;
 
     public Practica3() {
-        setTitle("Práctica 3 - Integración");
+        setTitle("Ejercicio 1"); // Título según captura
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
 
-        panelIzquierdo = new JPanel(new GridLayout(3, 1, 5, 5));
-        panelIzquierdo.setPreferredSize(new Dimension(250, 0));
+        // Panel izquierdo con márgenes para que los botones no peguen a los bordes
+        panelIzquierdo = new JPanel(new GridLayout(3, 1, 15, 15));
+        panelIzquierdo.setPreferredSize(new Dimension(220, 0));
         panelIzquierdo.setBackground(Color.GRAY);
+        panelIzquierdo.setBorder(new EmptyBorder(15, 15, 15, 15));
 
-        // Botón Rojo
+        Font fuenteBotones = new Font("Arial", Font.PLAIN, 22);
+
         btnRojo = new JButton("Rojo");
         btnRojo.setBackground(Color.RED);
         btnRojo.setForeground(Color.WHITE);
+        btnRojo.setFont(fuenteBotones);
         btnRojo.setToolTipText("Cambia a rojo");
         btnRojo.addActionListener(e -> cambiarFondo(Color.RED, btnRojo));
 
-        // Botón Verde
         btnVerde = new JButton("Verde");
         btnVerde.setBackground(Color.GREEN);
+        btnVerde.setForeground(Color.WHITE);
+        btnVerde.setFont(fuenteBotones);
         btnVerde.setToolTipText("Cambia a verde");
         btnVerde.addActionListener(e -> cambiarFondo(Color.GREEN, btnVerde));
 
-        // Botón Azul
         btnAzul = new JButton("Azul");
         btnAzul.setBackground(Color.BLUE);
         btnAzul.setForeground(Color.WHITE);
+        btnAzul.setFont(fuenteBotones);
         btnAzul.setToolTipText("Cambia a azul");
         btnAzul.addActionListener(e -> cambiarFondo(Color.BLUE, btnAzul));
 
@@ -52,7 +59,7 @@ public class Practica3 extends JFrame {
 
         canvas = new DrawCanvas();
         canvas.setPreferredSize(new Dimension(CANVAS_WIDTH, CANVAS_HEIGHT));
-        canvas.setBackground(Color.LIGHT_GRAY);
+        canvas.setBackground(new Color(180, 185, 200)); // Gris azulado similar a la captura
 
         JPanel btnPanel = new JPanel(new FlowLayout());
 
