@@ -4,16 +4,14 @@ import javax.swing.*;
 import java.util.Random;
 
 public class Practica3 extends JFrame {
-    // Constantes de tamaño
     private static final int CANVAS_WIDTH = 400;
     private static final int CANVAS_HEIGHT = 400;
     private JPanel panelIzquierdo;
-    private DrawCanvas canvas; // El canvas es nuestro panel de la derecha
+    private DrawCanvas canvas;
 
-    // Color de las líneas
+    private JButton btnRojo, btnVerde, btnAzul;
     private Color currentLineColor = Color.BLACK;
 
-    // Línea Vertical y Horizontal
     private int vX1 = CANVAS_WIDTH / 2, vY1 = 20;
     private int vX2 = vX1, vY2 = CANVAS_HEIGHT - 20;
     private int hX1 = 20, hY1 = CANVAS_HEIGHT / 2;
@@ -24,21 +22,38 @@ public class Practica3 extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
 
-        //Zona izquierda para los botones
         panelIzquierdo = new JPanel(new GridLayout(3, 1, 5, 5));
         panelIzquierdo.setPreferredSize(new Dimension(250, 0));
         panelIzquierdo.setBackground(Color.GRAY);
 
-        panelIzquierdo.add(new JLabel("Espacio Botón Rojo", SwingConstants.CENTER));
-        panelIzquierdo.add(new JLabel("Espacio Botón Verde", SwingConstants.CENTER));
-        panelIzquierdo.add(new JLabel("Espacio Botón Azul", SwingConstants.CENTER));
+        // Botón Rojo
+        btnRojo = new JButton("Rojo");
+        btnRojo.setBackground(Color.RED);
+        btnRojo.setForeground(Color.WHITE);
+        btnRojo.setToolTipText("Cambia a rojo");
+        btnRojo.addActionListener(e -> cambiarFondo(Color.RED, btnRojo));
 
-        //Zona derecha en la que se cambia de color y mueven las lineas
+        // Botón Verde
+        btnVerde = new JButton("Verde");
+        btnVerde.setBackground(Color.GREEN);
+        btnVerde.setToolTipText("Cambia a verde");
+        btnVerde.addActionListener(e -> cambiarFondo(Color.GREEN, btnVerde));
+
+        // Botón Azul
+        btnAzul = new JButton("Azul");
+        btnAzul.setBackground(Color.BLUE);
+        btnAzul.setForeground(Color.WHITE);
+        btnAzul.setToolTipText("Cambia a azul");
+        btnAzul.addActionListener(e -> cambiarFondo(Color.BLUE, btnAzul));
+
+        panelIzquierdo.add(btnRojo);
+        panelIzquierdo.add(btnVerde);
+        panelIzquierdo.add(btnAzul);
+
         canvas = new DrawCanvas();
         canvas.setPreferredSize(new Dimension(CANVAS_WIDTH, CANVAS_HEIGHT));
         canvas.setBackground(Color.LIGHT_GRAY);
 
-        //Panel inferior con los botones para las lineas
         JPanel btnPanel = new JPanel(new FlowLayout());
 
         JButton btnIzq = new JButton("Mover Izquierda");
@@ -66,13 +81,12 @@ public class Practica3 extends JFrame {
         btnPanel.add(btnAbajo);
         btnPanel.add(btnColor);
 
-        //Añadir todo al JFrame
         add(panelIzquierdo, BorderLayout.WEST);
         add(canvas, BorderLayout.CENTER);
         add(btnPanel, BorderLayout.SOUTH);
 
-        //Para que funcionen las teclas del teclado
         addKeyListener(new KeyAdapter() {
+            @Override
             public void keyPressed(KeyEvent evt) {
                 switch (evt.getKeyCode()) {
                     case KeyEvent.VK_LEFT:  vX1 -= 10; vX2 -= 10; break;
@@ -90,6 +104,14 @@ public class Practica3 extends JFrame {
         requestFocus();
     }
 
+    private void cambiarFondo(Color c, JButton pulsado) {
+        canvas.setBackground(c);
+        btnRojo.setEnabled(pulsado != btnRojo);
+        btnVerde.setEnabled(pulsado != btnVerde);
+        btnAzul.setEnabled(pulsado != btnAzul);
+        actualizar();
+    }
+
     private void actualizar() {
         canvas.repaint();
         requestFocus();
@@ -99,7 +121,6 @@ public class Practica3 extends JFrame {
         SwingUtilities.invokeLater(() -> new Practica3());
     }
 
-    // Clase para el dibujo
     class DrawCanvas extends JPanel {
         @Override
         protected void paintComponent(Graphics g) {
