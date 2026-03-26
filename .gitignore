@@ -10,5 +10,6 @@ estadistica.py
 __pycache__/
 *.whl
 myenv/
-.venv/
+venv/
 .idea/
+out/
