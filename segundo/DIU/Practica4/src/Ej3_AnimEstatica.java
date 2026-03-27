@@ -16,10 +16,10 @@ public class Ej3_AnimEstatica extends JFrame {
     public Ej3_AnimEstatica() {
         // Load images
         imageArray = new ImageIcon[] {
-                new ImageIcon(getClass().getResource("/pacman.gif")),
-                new ImageIcon(getClass().getResource("/right1.gif")),
-                new ImageIcon(getClass().getResource("/right2.gif")),
-                new ImageIcon(getClass().getResource("/right3.gif"))
+                new ImageIcon(getClass().getResource("resources/pacman.gif")),
+                new ImageIcon(getClass().getResource("resources/right1.gif")),
+                new ImageIcon(getClass().getResource("resources/right2.gif")),
+                new ImageIcon(getClass().getResource("resources/right3.gif"))
         };
 
         // JFrame settings
