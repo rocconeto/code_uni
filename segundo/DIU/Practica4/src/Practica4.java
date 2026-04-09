@@ -71,10 +71,10 @@ public class Practica4 extends JFrame {
     private void cargarImagenes() {
         // Carga de sprites
         framesRight = new ImageIcon[]{
-                new ImageIcon(getClass().getResource("/pacman.gif")),
-                new ImageIcon(getClass().getResource("/right1.gif")),
-                new ImageIcon(getClass().getResource("/right2.gif")),
-                new ImageIcon(getClass().getResource("/right3.gif"))
+                new ImageIcon(getClass().getResource("/resources/pacman.gif")),
+                new ImageIcon(getClass().getResource("/resources/right1.gif")),
+                new ImageIcon(getClass().getResource("/resources/right2.gif")),
+                new ImageIcon(getClass().getResource("/resources/right3.gif"))
         };
 
         // Movimiento a la izquierda
