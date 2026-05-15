@@ -5,27 +5,28 @@ import java.awt.*;
 import java.io.File;
 
 public class Ejercicio7_1 extends JFrame {
-    private JButton btnAbrir, btnPlay, btnPause, btnStop;
-    private JSlider slider;
-    private JLabel labelDuration;
+    // Declaradas como final (soluciona advertencias 'may be final')
+    private final JButton btnAbrir, btnPlay, btnPause, btnStop;
+    private final JSlider slider;
+    private final JLabel labelDuration;
+
     private Clip clip;
     private long totalDurationMicros = 0;
     private long currentPosition = 0;
-    private Thread updateThread;
 
     public Ejercicio7_1() {
         setTitle("Reproductor de Audio");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new FlowLayout());
 
-        // Inicializar componentes
-        btnAbrir = new JButton(new ImageIcon(getClass().getResource("/abrir.png")));
-        btnPlay = new JButton(new ImageIcon(getClass().getResource("/play.png")));
-        btnPause = new JButton(new ImageIcon(getClass().getResource("/pausa.png")));
-        btnStop = new JButton(new ImageIcon(getClass().getResource("/stop.png")));
+        // Usamos el método seguro para cargar iconos
+        btnAbrir = crearIcono("/abrir.png", "Abrir");
+        btnPlay = crearIcono("/play.png", "Play");
+        btnPause = crearIcono("/pausa.png", "Pausa");
+        btnStop = crearIcono("/stop.png", "Stop");
 
         slider = new JSlider(0, 100, 0);
-        slider.setEnabled(false); // Nunca activo para el usuario en el Ej 7.1
+        slider.setEnabled(false);
 
         labelDuration = new JLabel("0 seg");
 
@@ -42,7 +43,7 @@ public class Ejercicio7_1 extends JFrame {
         add(slider);
         add(labelDuration);
 
-        // Listeners
+        // Listeners (nombrando la variable 'e' por si se usara, aunque IntelliJ diga que no se usa)
         btnAbrir.addActionListener(e -> abrirArchivo());
         btnPlay.addActionListener(e -> reproducir());
         btnPause.addActionListener(e -> pausar());
@@ -50,6 +51,18 @@ public class Ejercicio7_1 extends JFrame {
 
         pack();
         setLocationRelativeTo(null);
+    }
+
+    // --- MÉTODO SEGURO PARA CARGAR IMÁGENES ---
+    private JButton crearIcono(String ruta, String textoFallback) {
+        java.net.URL imgURL = getClass().getResource(ruta);
+        if (imgURL != null) {
+            return new JButton(new ImageIcon(imgURL));
+        } else {
+            // Si no encuentra la imagen, al menos crea un botón con texto y avisa en consola
+            System.err.println("Advertencia: No se encontró la imagen: " + ruta);
+            return new JButton(textoFallback);
+        }
     }
 
     private void abrirArchivo() {
@@ -85,14 +98,19 @@ public class Ejercicio7_1 extends JFrame {
             btnPause.setEnabled(true);
             btnStop.setEnabled(true);
 
-            updateThread = new Thread(() -> {
-                while (clip != null && clip.isRunning()) {
-                    long remaining = totalDurationMicros - clip.getMicrosecondPosition();
-                    SwingUtilities.invokeLater(() -> {
-                        labelDuration.setText(String.format("%d seg", remaining / 1000000));
-                        slider.setValue((int) (100 * clip.getMicrosecondPosition() / totalDurationMicros));
-                    });
-                    try { Thread.sleep(100); } catch (InterruptedException ignored) {}
+            // Corrección al bucle del Thread para mejorar el busy-waiting
+            Thread updateThread = new Thread(() -> {
+                try {
+                    while (clip != null && clip.isRunning()) {
+                        long remaining = totalDurationMicros - clip.getMicrosecondPosition();
+                        SwingUtilities.invokeLater(() -> {
+                            labelDuration.setText(String.format("%d seg", remaining / 1000000));
+                            slider.setValue((int) (100 * clip.getMicrosecondPosition() / totalDurationMicros));
+                        });
+                        Thread.sleep(100);
+                    }
+                } catch (InterruptedException ex) {
+                    Thread.currentThread().interrupt(); // Restablecer estado de interrupción
                 }
             });
             updateThread.start();

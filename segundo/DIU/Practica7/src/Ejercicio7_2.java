@@ -4,19 +4,21 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class Ejercicio7_2 extends JFrame {
-    private JLabel lblPortada, lblTitulo, lblCompositor, lblTiempoTranscurrido, lblTiempoRestante;
-    private JSlider slider;
-    private JButton btnPrev, btnPlayPause, btnNext;
-    private ArrayList<String> canciones;
-    private int currSong = 0;
 
+    private final JLabel lblPortada, lblTitulo, lblCompositor, lblTiempoTranscurrido, lblTiempoRestante;
+    private final JSlider slider;
+    private final JButton btnPrev, btnPlayPause, btnNext;
+    private final ArrayList<String> canciones;
+
+    private int currSong = 0;
     private Clip clip;
     private long totalDurationMicros = 0;
     private Thread updateThread;
 
     public Ejercicio7_2() {
         setTitle("Reproductor");
-        setSize(300, 360);
+        // Aumentado a 400 para compensar la barra superior de Windows 11
+        setSize(300, 400);
         setResizable(false);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new FlowLayout(FlowLayout.CENTER, 5, 10));
@@ -51,9 +53,12 @@ public class Ejercicio7_2 extends JFrame {
         panelSlider.setPreferredSize(new Dimension(280, 30));
 
         JPanel panelBotones = new JPanel(new GridLayout(1, 3, 10, 0));
-        btnPrev = new JButton(new ImageIcon(getClass().getResource("/backward.png")));
-        btnPlayPause = new JButton(new ImageIcon(getClass().getResource("/play.png")));
-        btnNext = new JButton(new ImageIcon(getClass().getResource("/forward.png")));
+
+        // Creación segura de botones
+        btnPrev = crearBotonSeguro("/backward.png", "<<");
+        btnPlayPause = crearBotonSeguro("/play.png", "Play");
+        btnNext = crearBotonSeguro("/forward.png", ">>");
+
         panelBotones.add(btnPrev);
         panelBotones.add(btnPlayPause);
         panelBotones.add(btnNext);
@@ -71,45 +76,80 @@ public class Ejercicio7_2 extends JFrame {
         cargarCancion();
     }
 
+    // --- MÉTODOS SEGUROS PARA CARGAR RECURSOS ---
+    private JButton crearBotonSeguro(String ruta, String fallback) {
+        java.net.URL imgURL = getClass().getResource(ruta);
+        if (imgURL != null) {
+            return new JButton(new ImageIcon(imgURL));
+        } else {
+            return new JButton(fallback);
+        }
+    }
+
+    private void cambiarIconoSeguro(JButton btn, String ruta, String fallback) {
+        java.net.URL imgURL = getClass().getResource(ruta);
+        if (imgURL != null) {
+            btn.setIcon(new ImageIcon(imgURL));
+            btn.setText(""); // Ocultamos el texto si hay imagen
+        } else {
+            btn.setIcon(null);
+            btn.setText(fallback);
+        }
+    }
+
     private void cargarCancion() {
         detenerActual();
         String archivo = canciones.get(currSong);
 
-        // Extraer metadatos separando por el guion " - "
+        // Extraer metadatos separando por el guion
         String nombreBase = archivo.substring(0, archivo.lastIndexOf("."));
         String[] partes = nombreBase.split(" - ");
         if(partes.length == 2) {
             lblTitulo.setText(partes[0]);
             lblCompositor.setText(partes[1]);
+        } else {
+            lblTitulo.setText(nombreBase);
+            lblCompositor.setText("Desconocido");
         }
 
-        // Cargar Portada
+        // Carga segura de Portada
         String imgPath = "/" + nombreBase + ".png";
-        ImageIcon icono = new ImageIcon(getClass().getResource(imgPath));
-        Image imgEscalada = icono.getImage().getScaledInstance(200, 200, Image.SCALE_SMOOTH);
-        lblPortada.setIcon(new ImageIcon(imgEscalada));
-
-        // Preparar Audio
-        try {
-            AudioInputStream stream = AudioSystem.getAudioInputStream(getClass().getResource("/" + archivo));
-            clip = AudioSystem.getClip();
-            clip.open(stream);
-            totalDurationMicros = clip.getMicrosecondLength();
-            actualizarEtiquetasTiempo(0);
-        } catch (Exception ex) {
-            System.err.println("Error cargando " + archivo);
+        java.net.URL imgURL = getClass().getResource(imgPath);
+        if (imgURL != null) {
+            ImageIcon icono = new ImageIcon(imgURL);
+            Image imgEscalada = icono.getImage().getScaledInstance(200, 200, Image.SCALE_SMOOTH);
+            lblPortada.setIcon(new ImageIcon(imgEscalada));
+            lblPortada.setText("");
+        } else {
+            lblPortada.setIcon(null);
+            lblPortada.setText("Sin Portada");
         }
-        btnPlayPause.setIcon(new ImageIcon(getClass().getResource("/play.png")));
+
+        // Carga segura de Audio
+        java.net.URL audioURL = getClass().getResource("/" + archivo);
+        if (audioURL != null) {
+            try {
+                AudioInputStream stream = AudioSystem.getAudioInputStream(audioURL);
+                clip = AudioSystem.getClip();
+                clip.open(stream);
+                totalDurationMicros = clip.getMicrosecondLength();
+                actualizarEtiquetasTiempo(0);
+            } catch (Exception ex) {
+                System.err.println("Error cargando o procesando el audio: " + archivo);
+            }
+        }
+
+        cambiarIconoSeguro(btnPlayPause, "/play.png", "Play");
     }
 
     private void togglePlayPause() {
         if (clip != null) {
             if (clip.isRunning()) {
                 clip.stop();
-                btnPlayPause.setIcon(new ImageIcon(getClass().getResource("/play.png")));
+                cambiarIconoSeguro(btnPlayPause, "/play.png", "Play");
             } else {
                 clip.start();
-                btnPlayPause.setIcon(new ImageIcon(getClass().getResource("/pause.png")));
+                cambiarIconoSeguro(btnPlayPause, "/pause.png", "Pause");
                 iniciarHiloActualizacion();
             }
         }
@@ -136,13 +176,19 @@ public class Ejercicio7_2 extends JFrame {
 
     private void iniciarHiloActualizacion() {
         updateThread = new Thread(() -> {
-            while (clip != null && clip.isRunning()) {
-                long pos = clip.getMicrosecondPosition();
-                SwingUtilities.invokeLater(() -> {
-                    actualizarEtiquetasTiempo(pos);
-                    slider.setValue((int) (100 * pos / totalDurationMicros));
-                });
-                try { Thread.sleep(100); } catch (InterruptedException ignored) {}
+            try {
+                while (clip != null && clip.isRunning()) {
+                    long pos = clip.getMicrosecondPosition();
+                    SwingUtilities.invokeLater(() -> {
+                        actualizarEtiquetasTiempo(pos);
+                        if (totalDurationMicros > 0) {
+                            slider.setValue((int) (100 * pos / totalDurationMicros));
+                        }
+                    });
+                    Thread.sleep(100);
+                }
+            } catch (InterruptedException ex) {
+                Thread.currentThread().interrupt();
             }
         });
         updateThread.start();
